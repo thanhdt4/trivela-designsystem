@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="TriVela UI – tài liệu Trivela Care Design System: token, Button, Input field.">
+<title>TriVela UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: docs shell like a framework reference — sticky header, left nav, article, right "on this page" rail. */
+:root{
+  /* site chrome */
+  --page:#FFFFFF; --page-2:#F8FAFC; --ink:#0F172A; --ink-2:#334155; --ink-3:#64748B; --line:#E2E8F0; --line-2:#F1F5F9;
+  --accent:#0057C4; --accent-ink:#004EB0; --accent-soft:#E6EEF9; --code-bg:#0F172A; --code-ink:#E2E8F0; --code-dim:#94A3B8; --code-key:#80ABE2; --code-str:#96E68F; --code-tag:#FCA5A5;
+  --stage:#F8FAFC; --stage-dot:#E2E8F0;
+  --font:"Be Vietnam Pro",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  /* Trivela DS semantic tokens (Light) */
+  --text-primary:#0F172A; --text-white:#FFFFFF; --text-brand-tertiary:#004EB0; --text-error-primary:#DC2626;
+  --fg-white:#FFFFFF; --fg-primary:#0F172A; --fg-brand-secondary:#0057C4; --fg-error-secondary:#EF4444;
+  --bg-primary:#FFFFFF; --bg-primary-hover:#F8FAFC; --bg-brand-solid:#0057C4; --bg-brand-solid-hover:#004EB0; --bg-brand-primary:#E6EEF9; --bg-brand-primary-hover:#B3CDED;
+  --bg-error-solid:#DC2626; --bg-error-solid-hover:#B91C1C; --bg-error-secondary:#FEE2E2; --bg-error-secondary-hover:#FECACA;
+  --bg-secondary-brand-solid:#2A9722; --bg-secondary-brand-solid-hover:#24771E; --bg-disabled:#E2E8F0;
+  --border-brand:#0057C4; --focus-ring:#0057C4; --focus-ring-error:#EF4444; --focus-gap:#FFFFFF;
+  --glass-edge:rgba(230,230,230,.6); --ghost-shadow:0 0 0 1px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.08),0 8px 15px rgba(0,0,0,.07);
+  --text-secondary:#334155; --text-tertiary:#475569; --text-placeholder:#64748B; --text-brand-tertiary-alt:#004EB0;
+  --border-primary:#CBD5E1; --border-secondary:#E2E8F0; --border-error:#EF4444; --border-error-subtle:#FCA5A5; --fg-quaternary:#94A3B8; --utility-neutral-300:#CBD5E1;
+  --bg-tag:#FFFFFF; --input-shadow:0 1px 2px rgba(0,0,0,.05);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --page:#020617; --page-2:#0B1222; --ink:#F8FAFC; --ink-2:#CBD5E1; --ink-3:#94A3B8; --line:#1E293B; --line-2:#0F172A;
+  --accent:#80ABE2; --accent-ink:#99BCE7; --accent-soft:#0B2547; --code-bg:#0B1222; --stage:#0B1222; --stage-dot:#1E293B;
+  --text-primary:#F8FAFC; --text-brand-tertiary:#94A3B8; --text-error-primary:#F87171;
+  --fg-primary:#FFFFFF; --fg-brand-secondary:#0057C4; --fg-error-secondary:#F87171;
+  --bg-primary:#020617; --bg-primary-hover:#0F172A; --bg-brand-primary:#0057C4; --bg-brand-primary-hover:#1A68CA; --bg-brand-solid-hover:#1A68CA;
+  --bg-error-secondary:#DC2626; --bg-error-secondary-hover:#B91C1C; --bg-disabled:#334155;
+  --border-brand:#1A68CA; --focus-gap:#020617; --glass-edge:rgba(255,255,255,.12); --ghost-shadow:0 0 0 1px #1E293B;
+  --text-secondary:#CBD5E1; --text-tertiary:#94A3B8; --text-placeholder:#64748B; --text-brand-tertiary-alt:#F8FAFC;
+  --border-primary:#334155; --border-secondary:#1E293B; --border-error:#F87171; --border-error-subtle:#EF4444; --fg-quaternary:#64748B; --utility-neutral-300:#334155;
+  --bg-tag:#0F172A; --input-shadow:none;
+  color-scheme:dark; } }
+:root[data-theme="dark"]{
+  --page:#020617; --page-2:#0B1222; --ink:#F8FAFC; --ink-2:#CBD5E1; --ink-3:#94A3B8; --line:#1E293B; --line-2:#0F172A;
+  --accent:#80ABE2; --accent-ink:#99BCE7; --accent-soft:#0B2547; --code-bg:#0B1222; --stage:#0B1222; --stage-dot:#1E293B;
+  --text-primary:#F8FAFC; --text-brand-tertiary:#94A3B8; --text-error-primary:#F87171;
+  --fg-primary:#FFFFFF; --fg-brand-secondary:#0057C4; --fg-error-secondary:#F87171;
+  --bg-primary:#020617; --bg-primary-hover:#0F172A; --bg-brand-primary:#0057C4; --bg-brand-primary-hover:#1A68CA; --bg-brand-solid-hover:#1A68CA;
+  --bg-error-secondary:#DC2626; --bg-error-secondary-hover:#B91C1C; --bg-disabled:#334155;
+  --border-brand:#1A68CA; --focus-gap:#020617; --glass-edge:rgba(255,255,255,.12); --ghost-shadow:0 0 0 1px #1E293B;
+  --text-secondary:#CBD5E1; --text-tertiary:#94A3B8; --text-placeholder:#64748B; --text-brand-tertiary-alt:#F8FAFC;
+  --border-primary:#334155; --border-secondary:#1E293B; --border-error:#F87171; --border-error-subtle:#EF4444; --fg-quaternary:#64748B; --utility-neutral-300:#334155;
+  --bg-tag:#0F172A; --input-shadow:none;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:80px}
+body{background:var(--page);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--page)}
+a{color:inherit}
+code,pre,.mono{font-family:var(--mono)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+
+/* Header */
+.hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:color-mix(in srgb,var(--page) 88%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.hdr-in{max-width:1440px;margin:0 auto;height:60px;display:flex;align-items:center;gap:16px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.brand{display:flex;align-items:baseline;gap:8px;text-decoration:none}
+.brand b{font-weight:700;font-size:20px;letter-spacing:-.01em;color:var(--accent-ink)}
+.brand b i{font-style:normal;color:#2A9722}
+.brand span{font-size:12px;font-weight:600;color:var(--ink-3);border:1px solid var(--line);border-radius:9999px;padding:1px 8px;line-height:18px}
+.hdr-sp{flex:1}
+.hdr a.ext{font-size:14px;font-weight:500;color:var(--ink-2);text-decoration:none}
+.hdr a.ext:hover{color:var(--accent-ink)}
+.iconbtn{width:36px;height:36px;border-radius:8px;border:1px solid var(--line);background:var(--page);color:var(--ink-2);display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+.iconbtn:hover{color:var(--ink);background:var(--page-2)}
+.menu-btn{display:none}
+
+/* Shell */
+.shell{max-width:1440px;margin:0 auto;display:grid;grid-template-columns:260px minmax(0,1fr) 220px;gap:48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.nav{position:sticky;top:calc(60px + env(safe-area-inset-top,0px));align-self:start;height:calc(100vh - 60px - env(safe-area-inset-top,0px));overflow:auto;padding-block:32px 48px;padding-right:8px}
+.nav h5{margin:24px 0 8px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+.nav h5:first-child{margin-top:0}
+.nav ul{list-style:none;margin:0;padding:0 0 0 12px;border-left:1px solid var(--line)}
+.nav li a{display:block;margin-left:-13px;padding:5px 0 5px 12px;border-left:1px solid transparent;font-size:14px;color:var(--ink-3);text-decoration:none}
+.nav li a:hover{color:var(--ink);border-left-color:var(--ink-3)}
+.nav li a[aria-current="page"]{color:var(--accent-ink);border-left-color:var(--accent);font-weight:600}
+.nav .soon{display:block;padding:5px 0;font-size:14px;color:var(--ink-3);opacity:.6}
+main{min-width:0;padding-block:40px 96px}
+.toc{position:sticky;top:calc(60px + env(safe-area-inset-top,0px));align-self:start;padding-block:40px;font-size:13px}
+.toc h6{margin:0 0 10px;font-size:12px;font-weight:600;color:var(--ink);letter-spacing:.02em}
+.toc a{display:block;padding:4px 0;color:var(--ink-3);text-decoration:none;line-height:1.4}
+.toc a:hover{color:var(--ink)}
+.toc a.l2{padding-left:12px}
+
+/* Article */
+.eyebrow{font-size:14px;font-weight:600;color:var(--accent-ink);margin:0 0 6px}
+h1{font-size:32px;line-height:1.2;letter-spacing:-.02em;font-weight:700;margin:0 0 12px;text-wrap:balance}
+.lead{font-size:17px;line-height:1.6;color:var(--ink-2);max-width:68ch;margin:0 0 32px}
+h2{font-size:22px;line-height:1.3;font-weight:600;letter-spacing:-.01em;margin:56px 0 12px;scroll-margin-top:80px;text-wrap:balance}
+h3{font-size:17px;line-height:1.4;font-weight:600;margin:36px 0 8px;scroll-margin-top:80px}
+p{max-width:72ch;color:var(--ink-2);margin:0 0 16px}
+p code,li code,td code{font-size:.86em;background:var(--page-2);border:1px solid var(--line);border-radius:6px;padding:1px 6px;color:var(--ink)}
+ul.plain{padding-left:20px;color:var(--ink-2);max-width:72ch}
+ul.plain li{margin:4px 0}
+.callout{border:1px solid var(--line);background:var(--page-2);border-radius:12px;padding:14px 16px;font-size:14px;color:var(--ink-2);max-width:72ch;margin:0 0 20px}
+.callout b{color:var(--ink)}
+.callout.warn{border-color:#FDE047;background:color-mix(in srgb,#FEF9C3 55%,var(--page))}
+
+/* Reference table */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;margin:0 0 24px;max-height:none}
+.tbl-wrap.scroll{max-height:420px;overflow-y:auto}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{position:sticky;top:0;background:var(--page);text-align:left;font-weight:600;color:var(--ink);padding:10px 14px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:9px 14px;border-bottom:1px solid var(--line-2);vertical-align:top;color:var(--ink-2)}
+tr:last-child td{border-bottom:none}
+td.k{font-family:var(--mono);font-size:12.5px;color:var(--accent-ink);white-space:nowrap}
+td.v{font-family:var(--mono);font-size:12.5px;color:var(--ink-3)}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.pass{color:#16A34A;font-weight:600}.fail{color:#DC2626;font-weight:600}
+
+/* Example block */
+.ex{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:0 0 28px}
+.stage{background-color:var(--stage);background-image:radial-gradient(var(--stage-dot) 1px,transparent 1px);background-size:16px 16px;padding:32px 24px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:center;min-height:120px}
+.stage.col{flex-direction:column;align-items:flex-start}
+.stage .row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.stage .lbl{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);min-width:76px}
+.code{position:relative;background:var(--code-bg);border-top:1px solid var(--line)}
+.code pre{margin:0;padding:18px 96px 18px 20px;overflow-x:auto;font-size:13px;line-height:1.7;color:var(--code-ink);tab-size:2}
+.code .copy{position:absolute;top:10px;right:10px;font-family:var(--font);font-size:12px;font-weight:600;color:var(--code-dim);background:transparent;border:1px solid #334155;border-radius:6px;padding:3px 10px;cursor:pointer}
+.code .copy:hover{color:#fff;border-color:#64748B}
+.t-tag{color:var(--code-tag)}.t-attr{color:var(--code-key)}.t-str{color:var(--code-str)}.t-com{color:var(--code-dim)}
+
+/* Playground (Storybook controls) */
+.pg{display:grid;grid-template-columns:minmax(0,1fr) 280px;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:0 0 12px}
+.pg .stage{min-height:260px;border-right:1px solid var(--line)}
+.controls{padding:16px;display:flex;flex-direction:column;gap:14px;background:var(--page)}
+.controls h4{margin:0;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.ctl{display:flex;flex-direction:column;gap:6px}
+.ctl label,.ctl .cl{font-size:13px;font-weight:500;color:var(--ink-2)}
+.ctl select,.ctl input[type=text]{font:inherit;font-size:14px;height:36px;border:1px solid var(--line);border-radius:8px;padding:0 10px;background:var(--page);color:var(--ink)}
+.seg{display:flex;flex-wrap:wrap;gap:4px}
+.seg button{font:inherit;font-size:12.5px;font-weight:600;height:30px;padding:0 10px;border-radius:7px;border:1px solid var(--line);background:var(--page);color:var(--ink-2);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-ink)}
+.chk{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-2)}
+.chk input{width:16px;height:16px;accent-color:var(--accent)}
+.pg-code .code{border-top:none;border-radius:12px;border:1px solid var(--line)}
+.tabs{display:flex;gap:4px;margin:0 0 8px}
+.tabs button{font:inherit;font-size:13px;font-weight:600;padding:6px 12px;border-radius:8px;border:none;background:none;color:var(--ink-3);cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--page-2);color:var(--ink)}
+
+/* Swatches */
+.sw-grid{display:grid;grid-template-columns:120px repeat(11,minmax(0,1fr));gap:6px 8px;align-items:center;margin:0 0 24px;overflow-x:auto}
+.sw-name{font-size:13px;font-weight:600;color:var(--ink)}
+.sw{display:flex;flex-direction:column;gap:4px;min-width:52px}
+.sw i{display:block;height:40px;border-radius:8px;box-shadow:inset 0 0 0 1px rgba(15,23,42,.08)}
+.sw small{font-family:var(--mono);font-size:10.5px;line-height:1.3;color:var(--ink-3)}
+.sw small b{display:block;color:var(--ink-2);font-weight:500}
+.type-row{display:grid;grid-template-columns:150px minmax(0,1fr);gap:16px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--line-2)}
+.type-row .meta{font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+.type-row .meta b{display:block;font-family:var(--font);font-size:13px;color:var(--ink);font-weight:600}
+.type-row .sample{color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.bar{height:16px;background:var(--accent);border-radius:3px;opacity:.85}
+.rad{width:72px;height:72px;background:var(--accent-soft);border:2px solid var(--accent)}
+.shadow-box{width:100%;height:96px;border-radius:12px;background:var(--bg-primary);display:flex;align-items:flex-end;padding:10px;font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+.grid-auto{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:24px;margin:0 0 24px}
+.pager{display:flex;justify-content:space-between;gap:16px;margin-top:64px;padding-top:24px;border-top:1px solid var(--line)}
+.pager a{text-decoration:none;font-size:14px;color:var(--ink-3)}
+.pager a b{display:block;color:var(--ink);font-size:15px}
+.pager a:hover b{color:var(--accent-ink)}
+
+/* ===== TriVela Button (implementation under test) ===== */
+.tc-btn{--tint:var(--bg-brand-solid);position:relative;display:inline-flex;align-items:center;justify-content:center;font-family:"Be Vietnam Pro",ui-sans-serif,system-ui,sans-serif;font-weight:600;letter-spacing:0;border:0;border-radius:12px;white-space:nowrap;cursor:pointer;transition:background-color .15s ease,box-shadow .15s ease,transform .1s ease;-webkit-tap-highlight-color:transparent}
+.tc-btn .lbl-t{padding:0 2px}
+.tc-btn svg{flex:none}
+.tc-btn--xs{height:32px;padding:6px 10px;gap:4px;font-size:14px;line-height:20px}
+.tc-btn--sm{height:36px;padding:8px 12px;gap:4px;font-size:14px;line-height:20px}
+.tc-btn--md{height:40px;padding:10px 14px;gap:4px;font-size:14px;line-height:20px}
+.tc-btn--lg{height:44px;padding:10px 16px;gap:6px;font-size:16px;line-height:24px}
+.tc-btn--xl{height:48px;padding:12px 18px;gap:6px;font-size:16px;line-height:24px}
+.tc-btn--icon{border-radius:9999px;padding:0;aspect-ratio:1/1}
+.tc-btn--xs.tc-btn--icon{width:32px}.tc-btn--sm.tc-btn--icon{width:36px}.tc-btn--md.tc-btn--icon{width:40px}.tc-btn--lg.tc-btn--icon{width:44px}.tc-btn--xl.tc-btn--icon{width:48px}
+.tc-btn--primary{--tint:var(--bg-brand-solid);--tint-h:var(--bg-brand-solid-hover)}
+.tc-btn--secondary{--tint:var(--bg-secondary-brand-solid);--tint-h:var(--bg-secondary-brand-solid-hover)}
+.tc-btn--error{--tint:var(--bg-error-solid);--tint-h:var(--bg-error-solid-hover)}
+.tc-btn--primary,.tc-btn--secondary,.tc-btn--error{background:var(--tint);color:var(--text-white);box-shadow:inset 0 1px 0 rgba(255,255,255,.28),inset 0 -1px 0 rgba(0,0,0,.18),-1px 0 0 -.5px var(--glass-edge),1px 0 0 -.5px var(--glass-edge),0 8px 15px rgba(0,0,0,.02)}
+.tc-btn--primary:hover,.tc-btn--secondary:hover,.tc-btn--error:hover{background:var(--tint-h)}
+.tc-btn--outline{background:var(--bg-primary);color:var(--text-brand-tertiary);box-shadow:inset 0 0 0 2px var(--border-brand)}
+.tc-btn--outline svg{color:var(--fg-brand-secondary)}
+.tc-btn--outline:hover{background:var(--bg-primary-hover)}
+.tc-btn--tertiary{background:var(--bg-brand-primary);color:var(--text-brand-tertiary)}
+.tc-btn--tertiary svg{color:var(--fg-brand-secondary)}
+.tc-btn--tertiary:hover{background:var(--bg-brand-primary-hover)}
+.tc-btn--ghost{background:var(--bg-primary);color:var(--text-primary);box-shadow:var(--ghost-shadow)}
+.tc-btn--ghost svg{opacity:.6}
+.tc-btn--ghost:hover{background:var(--bg-primary-hover)}
+.tc-btn--error-soft{background:var(--bg-error-secondary);color:var(--text-error-primary)}
+.tc-btn--error-soft svg{color:var(--fg-error-secondary)}
+.tc-btn--error-soft:hover{background:var(--bg-error-secondary-hover)}
+.tc-btn:active:not(:disabled){transform:scale(.98)}
+.tc-btn:focus-visible{outline:none;box-shadow:0 0 0 2px var(--focus-gap),0 0 0 4px var(--focus-ring)}
+.tc-btn--outline:focus-visible{box-shadow:inset 0 0 0 2px var(--border-brand),0 0 0 2px var(--focus-gap),0 0 0 4px var(--focus-ring)}
+.tc-btn--error:focus-visible,.tc-btn--error-soft:focus-visible{box-shadow:0 0 0 2px var(--focus-gap),0 0 0 4px var(--focus-ring-error)}
+.tc-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.tc-btn--primary:disabled,.tc-btn--secondary:disabled,.tc-btn--error:disabled{box-shadow:none;background:var(--tint)}
+.tc-btn--primary:disabled svg,.tc-btn--secondary:disabled svg,.tc-btn--error:disabled svg{opacity:.6}
+.tc-btn--ghost:disabled{background:var(--bg-disabled);box-shadow:none}
+.tc-btn[aria-busy="true"]{cursor:progress}
+.tc-spin{animation:tcspin .8s linear infinite}
+@keyframes tcspin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.tc-spin{animation-duration:2.4s}.tc-btn{transition:none}.tc-btn:active:not(:disabled){transform:none}}
+/* Force-state helpers for docs */
+.tc-btn.is-hover.tc-btn--primary,.tc-btn.is-hover.tc-btn--secondary,.tc-btn.is-hover.tc-btn--error{background:var(--tint-h)}
+.tc-btn.is-hover.tc-btn--outline,.tc-btn.is-hover.tc-btn--ghost{background:var(--bg-primary-hover)}
+.tc-btn.is-hover.tc-btn--tertiary{background:var(--bg-brand-primary-hover)}
+.tc-btn.is-hover.tc-btn--error-soft{background:var(--bg-error-secondary-hover)}
+.tc-btn.is-focus{box-shadow:0 0 0 2px var(--focus-gap),0 0 0 4px var(--focus-ring)}
+.tc-btn.is-focus.tc-btn--outline{box-shadow:inset 0 0 0 2px var(--border-brand),0 0 0 2px var(--focus-gap),0 0 0 4px var(--focus-ring)}
+.tc-btn.is-focus.tc-btn--error,.tc-btn.is-focus.tc-btn--error-soft{box-shadow:0 0 0 2px var(--focus-gap),0 0 0 4px var(--focus-ring-error)}
+
+/* ===== TriVela Input (implementation under test) ===== */
+.tc-field{display:flex;flex-direction:column;gap:6px;width:100%;max-width:var(--fw,320px);font-family:"Be Vietnam Pro",ui-sans-serif,system-ui,sans-serif;text-align:left}
+.tc-label{display:flex;align-items:center;gap:2px;font-size:14px;line-height:20px;font-weight:500;color:var(--text-secondary)}
+.tc-label .req{color:var(--text-error-primary)}
+.tc-hint{font-size:14px;line-height:20px;color:var(--text-tertiary);margin:0}
+.tc-field--sm .tc-hint{font-size:12px;line-height:18px}
+.tc-field.is-error .tc-hint{color:var(--text-error-primary)}
+.tc-input{position:relative;display:flex;align-items:center;gap:8px;height:44px;padding:0 12px;border-radius:12px;background:var(--bg-primary);box-shadow:inset 0 0 0 1px var(--border-primary),var(--input-shadow);color:var(--fg-quaternary);transition:box-shadow .15s ease;overflow:hidden}
+.tc-field--sm .tc-input{height:40px;padding:0 12px}
+.tc-field--lg .tc-input{height:48px;padding:0 14px}
+.tc-input{cursor:text}
+.tc-input input,.tc-input .val{flex:1;min-width:0;align-self:stretch;border:0;outline:0;background:transparent;font:inherit;font-size:16px;line-height:24px;color:var(--text-primary);padding:0}
+.tc-field--sm .tc-input input,.tc-field--sm .tc-input .val{font-size:14px;line-height:20px}
+.tc-input input::placeholder{color:var(--text-placeholder);opacity:1}
+.tc-input:focus-within,.tc-field.is-focus .tc-input{box-shadow:inset 0 0 0 2px var(--border-brand),var(--input-shadow)}
+.tc-field.is-error .tc-input{box-shadow:inset 0 0 0 1px var(--border-error-subtle),var(--input-shadow)}
+.tc-field.is-error .tc-input:focus-within,.tc-field.is-error.is-focus .tc-input{box-shadow:inset 0 0 0 2px var(--border-error),var(--input-shadow)}
+.tc-field.is-disabled .tc-input{opacity:.5;cursor:not-allowed}
+.tc-field.is-disabled input{cursor:not-allowed}
+.tc-input .help{display:inline-flex;color:var(--fg-quaternary);flex:none}
+.tc-field.is-error .tc-input .help{color:var(--fg-error-secondary)}
+.tc-input .icbtn{display:inline-flex;align-items:center;justify-content:center;border:0;background:none;color:var(--fg-quaternary);padding:0;cursor:pointer;flex:none}
+.tc-input .icbtn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px;border-radius:4px}
+.tc-input .muted{color:var(--text-tertiary);font-size:16px;line-height:24px;white-space:nowrap}
+.tc-field--sm .tc-input .muted{font-size:14px}
+.tc-input--split{padding:0!important;gap:0}
+.tc-addon{display:flex;align-items:center;gap:6px;align-self:stretch;padding:0 12px;color:var(--text-tertiary);font-size:16px;white-space:nowrap;flex:none}
+.tc-addon--lead{box-shadow:inset -1px 0 0 var(--border-primary)}
+.tc-addon--trail{box-shadow:inset 1px 0 0 var(--border-primary)}
+.tc-addon.btn{background:var(--bg-primary);color:var(--text-brand-tertiary);font-weight:600;font-size:14px;cursor:pointer;border:0;font-family:inherit}
+.tc-addon.btn:hover{background:var(--bg-primary-hover)}
+.tc-split-in{display:flex;align-items:center;gap:8px;flex:1;min-width:0;align-self:stretch;padding:0 12px}
+.tc-flag{width:20px;height:14px;border-radius:3px;background:#DA251D;position:relative;flex:none}
+.tc-flag::after{content:"";position:absolute;left:7px;top:4px;width:6px;height:6px;background:#FFCD00;clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+.tc-card{width:34px;height:24px;border-radius:4px;box-shadow:inset 0 0 0 1px var(--border-secondary);background:var(--bg-primary);display:flex;align-items:center;justify-content:center;flex:none}
+.tc-tag{display:inline-flex;align-items:center;gap:4px;height:24px;padding:2px 4px 2px 8px;border-radius:6px;box-shadow:inset 0 0 0 1px var(--border-primary);background:var(--bg-tag);color:var(--text-secondary);font-size:14px;line-height:20px;font-weight:500;flex:none}
+.tc-tag button{border:0;background:none;color:var(--fg-quaternary);display:inline-flex;padding:2px;cursor:pointer;border-radius:3px}
+.tc-counter{display:flex;align-items:center;gap:0;padding:0 4px!important}
+.tc-counter input{text-align:center}
+.tc-counter .cbtn{width:36px;height:36px;border-radius:10px;border:0;background:var(--bg-brand-primary);color:var(--fg-brand-secondary);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex:none}
+.tc-vchev{display:flex;flex-direction:column;height:100%;box-shadow:inset 1px 0 0 var(--border-primary);flex:none}
+.tc-vchev button{flex:1;width:28px;border:0;background:none;color:var(--fg-quaternary);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.tc-vchev button+button{box-shadow:inset 0 1px 0 var(--border-primary)}
+.tc-otp-mini{display:flex;gap:8px}
+.tc-otp-mini input{width:40px;height:40px;border-radius:8px;border:0;text-align:center;font:inherit;font-size:16px;color:var(--text-primary);background:var(--bg-primary);box-shadow:inset 0 0 0 1px var(--border-primary),var(--input-shadow);outline:0}
+.tc-otp-mini input:focus{box-shadow:inset 0 0 0 2px var(--border-brand)}
+.tc-textarea{display:block;width:100%;min-height:128px;resize:vertical;border:0;outline:0;border-radius:8px;padding:12px 14px;font:inherit;font-size:16px;line-height:24px;color:var(--text-primary);background:var(--bg-primary);box-shadow:inset 0 0 0 1px var(--border-primary),var(--input-shadow)}
+.tc-field--sm .tc-textarea{font-size:14px;line-height:20px;padding:10px 12px}
+.tc-textarea::placeholder{color:var(--text-placeholder)}
+.tc-textarea:focus{box-shadow:inset 0 0 0 2px var(--border-brand),var(--input-shadow)}
+.tc-field.is-error .tc-textarea{box-shadow:inset 0 0 0 1px var(--border-error-subtle),var(--input-shadow)}
+.tc-code{display:flex;align-items:center;gap:12px;flex-wrap:nowrap}
+.tc-code input{width:80px;height:80px;border-radius:12px;border:0;text-align:center;font:inherit;font-weight:500;font-size:48px;line-height:60px;letter-spacing:-.02em;color:var(--text-brand-tertiary-alt);background:var(--bg-primary);box-shadow:inset 0 0 0 1px var(--border-primary),var(--input-shadow);outline:0;padding:0}
+.tc-code input::placeholder{color:var(--utility-neutral-300)}
+.tc-code input:focus,.tc-code input:not(:placeholder-shown){box-shadow:inset 0 0 0 2px var(--border-brand),var(--input-shadow)}
+.tc-code--sm input{width:64px;height:64px;font-size:48px}
+.tc-code--lg input{width:96px;height:96px;font-size:60px;line-height:72px}
+.tc-code .dash{font-size:48px;font-weight:500;color:var(--utility-neutral-300);line-height:1}
+.tc-field.is-error .tc-code input{box-shadow:inset 0 0 0 1px var(--border-error-subtle);color:var(--text-error-primary)}
+
+/* Responsive */
+@media (max-width:1180px){.shell{grid-template-columns:240px minmax(0,1fr);gap:40px}.toc{display:none}}
+@media (max-width:860px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
+  .menu-btn{display:inline-flex}
+  .nav{position:fixed;z-index:25;top:calc(60px + env(safe-area-inset-top,0px));left:0;bottom:0;width:min(300px,86vw);height:auto;background:var(--page);border-right:1px solid var(--line);padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:16px;transform:translateX(-102%);transition:transform .2s ease}
+  .nav.open{transform:none}
+  .pg{grid-template-columns:minmax(0,1fr)}
+  .pg .stage{border-right:none;border-bottom:1px solid var(--line)}
+  .hdr a.ext{display:none}
+  h1{font-size:28px}
+  .type-row{grid-template-columns:minmax(0,1fr)}
+}
+</style>
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-in">
+    <button class="iconbtn menu-btn" id="menuBtn" aria-label="Mở menu" aria-expanded="false">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <a class="brand" href="#button"><b>Tri<i>V</i>ela UI</b><span>v1.0</span></a>
+    <div class="hdr-sp"></div>
+    <a class="ext" href="https://www.figma.com/design/oydTixgwzp6m3RA1ZqzWDG/Trivela-Care-Design-System?node-id=3287-427074" target="_blank" rel="noopener">Figma</a>
+    <button class="iconbtn" id="themeBtn" aria-label="Đổi giao diện sáng/tối">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="shell">
+  <nav class="nav" id="nav" aria-label="Tài liệu"></nav>
+  <main id="main"></main>
+  <aside class="toc" id="toc" aria-label="Trên trang này"></aside>
+</div>
+
+<script>
+(function(){
+"use strict";
+var $ = function(s,r){return (r||document).querySelector(s)};
+var esc = function(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")};
+
+/* ---------- Icons ---------- */
+var ICON = {
+  circle:'<circle cx="12" cy="12" r="9"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',
+  check:'<path d="M20 6L9 17l-5-5"/>',
+  phone:'<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/>',
+  trash:'<path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/>',
+  mic:'<rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v5"/>',
+  download:'<path d="M12 3v12M7 10l5 5 5-5M5 21h14"/>',
+  x:'<path d="M18 6L6 18M6 6l12 12"/>',
+  mail:'<rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/>',
+  lock:'<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+  eye:'<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>',
+  calendar:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+  help:'<circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/>',
+  alert:'<circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>',
+  chevDown:'<path d="M6 9l6 6 6-6"/>',
+  chevUp:'<path d="M18 15l-6-6-6 6"/>',
+  minus:'<path d="M5 12h14"/>',
+  copy:'<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
+  user:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+  pill:'<path d="M10.5 20.5a5 5 0 0 1-7-7l10-10a5 5 0 0 1 7 7z"/><path d="M8.5 8.5l7 7"/>'
+};
+var ICON_PICK=["circle","plus","arrow","check","phone","trash","mic","download","x"];
+function icon(name,size){size=size||20;return '<svg width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+ICON[name]+'</svg>'}
+function spinner(size){size=size||20;return '<svg class="tc-spin" width="'+size+'" height="'+size+'" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="2" opacity=".3"/><path d="M10 2a8 8 0 0 1 8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'}
+
+/* ---------- Button renderer ---------- */
+var HIER = ["primary","secondary","tertiary","ghost","outline","error","errorSoft"];
+var HIER_LABEL = {primary:"Primary",secondary:"Secondary",tertiary:"Tertiary",ghost:"Ghost",outline:"Outline",error:"Error",errorSoft:"Error soft"};
+var SIZES = ["xs","sm","md","lg","xl"];
+function kebab(h){return h==="errorSoft"?"error-soft":h}
+function btn(o){
+  o=Object.assign({size:"md",hierarchy:"primary",label:"Đặt lịch khám",iconLeading:null,iconTrailing:null,iconOnly:false,disabled:false,loading:false,loadingText:"Đang xử lý…",force:""},o);
+  var isz=o.size==="xs"?16:20;
+  var cls="tc-btn tc-btn--"+o.size+" tc-btn--"+kebab(o.hierarchy)+(o.iconOnly?" tc-btn--icon":"")+(o.force?" is-"+o.force:"");
+  var attrs=' type="button" class="'+cls+'"'+(o.disabled?" disabled":"")+(o.loading?' aria-busy="true"':"")+(o.iconOnly?' aria-label="'+esc(o.label)+'"':"");
+  var inner="";
+  if(o.loading){
+    inner=spinner(isz)+(o.iconOnly||o.loadingText===false?"":'<span class="lbl-t">'+esc(o.loadingText)+"</span>");
+  }else if(o.iconOnly){
+    inner=icon(o.iconLeading||"plus",isz);
+  }else{
+    inner=(o.iconLeading?icon(o.iconLeading,isz):"")+'<span class="lbl-t">'+esc(o.label)+"</span>"+(o.iconTrailing?icon(o.iconTrailing,isz):"");
+  }
+  return "<button"+attrs+">"+inner+"</button>";
+}
+function jsx(o){
+  var a=["<Button"];
+  if(o.size&&o.size!=="md")a.push('size="'+o.size+'"');
+  if(o.hierarchy&&o.hierarchy!=="primary")a.push('hierarchy="'+o.hierarchy+'"');
+  if(o.iconLeading&&!o.iconOnly)a.push("iconLeading={<"+cap(o.iconLeading)+"Icon />}");
+  if(o.iconTrailing&&!o.iconOnly)a.push("iconTrailing={<"+cap(o.iconTrailing)+"Icon />}");
+  if(o.iconOnly){a.push("iconOnly");a.push('aria-label="'+o.label+'"');a.push("iconLeading={<"+cap(o.iconLeading||"plus")+"Icon />}")}
+  if(o.loading)a.push("loading");
+  if(o.loading&&o.loadingText===false)a.push("loadingText={false}");
+  if(o.disabled)a.push("disabled");
+  if(o.iconOnly)return a.join(" ")+" />";
+  return a.join(" ")+">"+(o.label||"")+"</Button>";
+}
+function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+function hl(code){
+  // Order matters: each pass only matches escaped source text, never the spans inserted before it.
+  return esc(code)
+    .replace(/(\s)([a-zA-Z-]+)(=)/g,'$1\u0001$2\u0002$3')
+    .replace(/(&quot;[^&]*?&quot;)/g,'\u0003$1\u0002')
+    .replace(/(&lt;\/?)([A-Za-z][\w.]*)/g,'$1\u0004$2\u0002')
+    .replace(/(\/\*[\s\S]*?\*\/)/g,'\u0005$1\u0002')
+    .replace(/\u0001/g,'<span class="t-attr">').replace(/\u0003/g,'<span class="t-str">')
+    .replace(/\u0004/g,'<span class="t-tag">').replace(/\u0005/g,'<span class="t-com">')
+    .replace(/\u0002/g,'</span>');
+}
+function codeBlock(code,raw){
+  return '<div class="code"><button class="copy" type="button">Sao chép</button><pre><code>'+(raw?esc(code):hl(code))+'</code></pre></div>';
+}
+function example(stageHtml,code,opts){
+  opts=opts||{};
+  return '<div class="ex"><div class="stage'+(opts.col?" col":"")+'">'+stageHtml+'</div>'+(code?codeBlock(code,opts.raw):"")+"</div>";
+}
+function table(head,rows,cls){
+  return '<div class="tbl-wrap'+(cls?" "+cls:"")+'"><table><thead><tr>'+head.map(function(h){return"<th>"+h+"</th>"}).join("")+"</tr></thead><tbody>"+rows.map(function(r){return"<tr>"+r.join("")+"</tr>"}).join("")+"</tbody></table></div>";
+}
+
+/* ---------- Data ---------- */
+var PRIM = {
+  Primary:["#E6EEF9","#B3CDED","#99BCE7","#80ABE2","#1A68CA","#0057C4","#004EB0","#00469D","#003D89","#003476","#002C62"],
+  Secondary:["#F2FCF1","#E1F9DF","#C4F2C0","#96E68F","#5FD256","#36AD2D","#2A9722","#24771E","#215E1D","#1B4E19","#092B08"],
+  Neutral:["#F8FAFC","#F1F5F9","#E2E8F0","#CBD5E1","#94A3B8","#64748B","#475569","#334155","#1E293B","#0F172A","#020617"],
+  Error:["#FEF2F2","#FEE2E2","#FECACA","#FCA5A5","#F87171","#EF4444","#DC2626","#B91C1C","#991B1B","#7F1D1D","#450A0A"],
+  Warning:["#FEFCE8","#FEF9C3","#FEF08A","#FDE047","#FACC15","#EAB308","#CA8A04","#A16207","#854D0E","#713F12","#422006"],
+  Success:["#F0FDF4","#DCFCE7","#BBF7D0","#86EFAC","#4ADE80","#22C55E","#16A34A","#15803D","#166534","#14532D","#052E16"]
+};
+var STEPS=[50,100,200,300,400,500,600,700,800,900,950];
+var SEMANTIC=[
+  ["text-primary","Neutral/900","Neutral/50","Tiêu đề, chữ chính"],
+  ["text-secondary","Neutral/700","Neutral/300","Nhãn, mục menu"],
+  ["text-tertiary","Neutral/600","Neutral/400","Chữ phụ, gợi ý"],
+  ["text-quaternary","Neutral/500","Neutral/400","Tab chưa chọn, meta"],
+  ["text-placeholder","Neutral/500","Neutral/500","Placeholder input"],
+  ["text-brand-secondary","Primary/700","Neutral/300","Tab đang chọn"],
+  ["text-brand-tertiary","Primary/600","Neutral/400","Link, nút Outline/Tertiary"],
+  ["text-error-primary","Error/600","Error/400","Thông báo lỗi"],
+  ["text-success-primary","Success/600","Success/400","Trạng thái tốt"],
+  ["border-primary","Neutral/300","Neutral/700","Input, control có viền"],
+  ["border-secondary","Neutral/200","Neutral/800","Card, divider, hàng bảng"],
+  ["border-brand","Primary/500","Primary/400","Input focus, nút Outline"],
+  ["border-error-subtle","Error/300","Error/500","Input lỗi"],
+  ["fg-quaternary","Neutral/400","Neutral/500","Icon mặc định"],
+  ["fg-brand-primary","Primary/600","Primary/500","Icon thương hiệu"],
+  ["bg-primary","Base/white","Neutral/950","Nền trang, card"],
+  ["bg-secondary","Neutral/50","Neutral/900","Nền phụ, header bảng"],
+  ["bg-tertiary","Neutral/100","Neutral/800","Track toggle tắt"],
+  ["bg-brand-primary","Primary/50","Primary/500","Nút Tertiary, nền nhấn"],
+  ["bg-brand-solid","Primary/500","Primary/500","Nút Primary"],
+  ["bg-error-solid","Error/600","Error/600","Nút Error"],
+  ["bg-error-secondary","Error/100","Error/600","Nút Error soft"],
+  ["bg-warning-primary","Warning/50","Warning/950","Nền cảnh báo"],
+  ["bg-success-primary","Success/50","Success/950","Nền thành công"],
+  ["focus-ring","Primary/500","Primary/500","Vòng focus"]
+];
+function hexOf(ref){ if(ref==="Base/white")return"#FFFFFF"; var p=ref.split("/"); return PRIM[p[0]][STEPS.indexOf(+p[1])]; }
+var TYPE=[
+  ["Display 2xl",72,90,"-2%"],["Display xl",60,72,"-2%"],["Display lg",48,60,"-2%"],["Display md",36,44,"-2%"],
+  ["Display sm",30,38,"0"],["Display xs",24,32,"0"],["Text xl",20,30,"0"],["Text lg",18,28,"0"],["Text md",16,24,"0"],["Text sm",14,20,"0"],["Text xs",12,18,"0"]
+];
+var SPACING=[["none",0],["xxs",2],["xs",4],["sm",6],["md",8],["lg",12],["xl",16],["2xl",20],["3xl",24],["4xl",32],["5xl",40],["6xl",48],["7xl",64],["8xl",80],["9xl",96],["10xl",128],["11xl",160]];
+var RADIUS=[["none",0],["xxs",2],["xs",4],["sm",6],["md",8],["lg",10],["xl",12],["2xl",16],["3xl",20],["4xl",24],["5xl",32],["full",9999]];
+var SHADOWS=[
+  ["shadow-xs","0 1px 2px rgba(0,0,0,.05)","Input, badge modern"],
+  ["shadow-sm","0 1px 2px -1px rgba(0,0,0,.10), 0 1px 3px rgba(0,0,0,.10)","Knob toggle, tab trắng"],
+  ["shadow-md","0 2px 4px -2px rgba(0,0,0,.06), 0 4px 6px -1px rgba(0,0,0,.10)","Card nổi"],
+  ["shadow-lg","0 2px 2px -1px rgba(0,0,0,.04), 0 4px 6px -2px rgba(0,0,0,.03), 0 12px 16px -4px rgba(0,0,0,.08)","Dropdown, popover"],
+  ["shadow-xl","0 3px 3px -1.5px rgba(0,0,0,.04), 0 8px 8px -4px rgba(0,0,0,.03), 0 20px 24px -4px rgba(0,0,0,.08)","Modal"],
+  ["shadow-2xl","0 4px 4px -2px rgba(0,0,0,.04), 0 24px 48px -12px rgba(0,0,0,.18)","Toast, panel nổi"],
+  ["shadow-3xl","0 5px 5px -2.5px rgba(0,0,0,.04), 0 32px 64px -12px rgba(0,0,0,.14)","Lớp trên cùng"],
+  ["focus-ring","0 0 0 2px #FFFFFF, 0 0 0 4px #0057C4","Focus bàn phím"]
+];
+
+/* ---------- Pages ---------- */
+var NAV=[
+  ["Bắt đầu",[["introduction","Giới thiệu"]]],
+  ["Foundations",[["colors","Màu sắc"],["typography","Typography"],["spacing","Spacing"],["radius","Border radius"],["shadows","Shadow & focus"]]],
+  ["Components",[["button","Button"],["input","Input field"]]]
+];
+var ORDER=["introduction","colors","typography","spacing","radius","shadows","button","input"];
+var TITLES={introduction:"Giới thiệu",colors:"Màu sắc",typography:"Typography",spacing:"Spacing",radius:"Border radius",shadows:"Shadow & focus",button:"Button",input:"Input field"};
+
+var PAGES={};
+
+PAGES.introduction=function(){
+  return '<p class="eyebrow">Bắt đầu</p><h1>TriVela UI</h1>'+
+  '<p class="lead">Thư viện giao diện của Trivela Care, dựng từ Figma <b>Trivela Care Design System</b>. Mỗi trang ghi token, quy tắc dùng và ví dụ chạy được để design và dev cùng nhìn một nguồn.</p>'+
+  '<h2 id="nguyen-tac">Nguyên tắc</h2><ul class="plain">'+
+  '<li><b>Token theo ngữ nghĩa</b>: component chỉ dùng biến như <code>--bg-brand-solid</code>, không hard-code hex. Chế độ tối đổi theo token.</li>'+
+  '<li><b>Một font</b>: Be Vietnam Pro cho cả tiêu đề và nội dung, hỗ trợ đầy đủ tiếng Việt.</li>'+
+  '<li><b>Thang cố định</b>: spacing bước 4px, 11 cỡ chữ, 12 mức bo góc. Không dùng giá trị ngoài thang.</li>'+
+  '<li><b>Người lớn tuổi là người dùng chính</b>: vùng bấm tối thiểu 44px, chữ đủ tương phản, màu không bao giờ là cách duy nhất báo trạng thái.</li></ul>'+
+  '<h2 id="cai-dat">Dùng token</h2><p>Chép khối biến dưới đây vào stylesheet gốc. Toàn bộ danh sách nằm ở trang <a href="#colors">Màu sắc</a>.</p>'+
+  example('<button class="tc-btn tc-btn--md tc-btn--primary" type="button">'+icon("plus",20)+'<span class="lbl-t">Thêm lời nhắc</span></button>',
+  ':root {\n  --bg-brand-solid: #0057C4;   /* Primary/500 */\n  --text-brand-tertiary: #004EB0;\n  --border-secondary: #E2E8F0;\n  --radius-xl: 12px;\n  --font: "Be Vietnam Pro", sans-serif;\n}\n[data-theme="dark"] {\n  --text-brand-tertiary: #94A3B8;\n  --border-secondary: #1E293B;\n}',{raw:true})+
+  '<h2 id="trang-thai">Tình trạng component</h2>'+table(["Component","Figma","Code","Ghi chú"],[
+    ['<td><a href="#button">Button</a></td>','<td>210 biến thể</td>','<td class="pass">Có spec</td>','<td>Hover, Pressed, Focus đang là đề xuất</td>'],
+    ['<td><a href="#input">Input field</a></td>','<td>294 biến thể</td>','<td class="pass">Có spec</td>','<td>Chiều cao một số loại chưa thống nhất</td>'],
+    ['<td>Badge</td>','<td>Có</td>','<td>Chưa</td>','<td>Sắp viết</td>']
+  ]);
+};
+
+PAGES.colors=function(){
+  var g='<div class="sw-grid"><span></span>'+STEPS.map(function(s){return'<span class="mono" style="font-size:11px;color:var(--ink-3)">'+s+"</span>"}).join("");
+  Object.keys(PRIM).forEach(function(k){
+    g+='<span class="sw-name">'+k+"</span>"+PRIM[k].map(function(h,i){return'<span class="sw"><i style="background:'+h+'"></i><small><b>'+STEPS[i]+"</b>"+h.slice(1)+"</small></span>"}).join("");
+  });
+  g+="</div>";
+  var rows=SEMANTIC.map(function(r){return['<td class="k">--'+r[0]+"</td>",'<td><span style="display:inline-flex;gap:8px;align-items:center"><i style="width:14px;height:14px;border-radius:4px;background:'+hexOf(r[1])+';box-shadow:inset 0 0 0 1px rgba(0,0,0,.1)"></i><span class="mono" style="font-size:12px">'+r[1]+"</span></span></td>",'<td><span style="display:inline-flex;gap:8px;align-items:center"><i style="width:14px;height:14px;border-radius:4px;background:'+hexOf(r[2])+';box-shadow:inset 0 0 0 1px rgba(255,255,255,.15),inset 0 0 0 1px rgba(0,0,0,.1)"></i><span class="mono" style="font-size:12px">'+r[2]+"</span></span></td>","<td>"+r[3]+"</td>"]});
+  return '<p class="eyebrow">Foundations</p><h1>Màu sắc</h1><p class="lead">Sáu thang màu gốc, mỗi thang 11 bậc, và các token theo ngữ nghĩa trỏ vào chúng. Component chỉ dùng token theo ngữ nghĩa.</p>'+
+  '<h2 id="primitives">Bảng màu gốc</h2><p>Primary là xanh thương hiệu, Secondary là xanh lá. Neutral dùng thang slate.</p>'+'<div style="overflow-x:auto">'+g+"</div>"+
+  '<h2 id="semantic">Token theo ngữ nghĩa</h2><p>Mỗi token có một giá trị cho Light và một cho Dark. Đã đối chiếu với file <code>tokens.json</code> xuất từ Figma.</p>'+
+  table(["Token","Light","Dark","Dùng cho"],rows,"scroll")+
+  '<div class="callout warn"><b>Chưa có token:</b> nền nút Secondary đang gắn thẳng <code>Secondary/600</code>, nền Ghost khi disabled gắn <code>Neutral/200</code>. Đề xuất thêm <code>bg-secondary-brand-solid</code> và <code>bg-disabled</code>.</div>';
+};
+
+PAGES.typography=function(){
+  var rows=TYPE.map(function(t){
+    var w=t[1]>=24?600:400;
+    return '<div class="type-row"><div class="meta"><b>'+t[0]+"</b>"+t[1]+"/"+t[2]+" · ls "+t[3]+'</div><div class="sample" style="font-size:'+Math.min(t[1],56)+'px;line-height:'+(t[1]>56?1.2:t[2]/t[1])+';letter-spacing:'+(t[3]==="0"?"0":"-0.02em")+';font-weight:'+w+'">Nhắc uống thuốc huyết áp lúc 08:00</div></div>';
+  }).join("");
+  return '<p class="eyebrow">Foundations</p><h1>Typography</h1><p class="lead">Một họ chữ Be Vietnam Pro, 11 cỡ, 4 độ đậm. Text sm (14/20) là cỡ mặc định của giao diện: nút, nhãn, menu, ô bảng.</p>'+
+  '<h2 id="thang-chu">Thang chữ</h2>'+rows+
+  '<h2 id="do-dam">Độ đậm</h2>'+table(["Weight","Giá trị","Dùng cho"],[
+    ['<td>Regular</td>','<td class="num">400</td>','<td>Nội dung, gợi ý</td>'],
+    ['<td>Medium</td>','<td class="num">500</td>','<td>Nhãn, badge, ô chính của bảng</td>'],
+    ['<td>Semibold</td>','<td class="num">600</td>','<td>Nút, menu, tab, tiêu đề</td>'],
+    ['<td>Bold</td>','<td class="num">700</td>','<td>Wordmark, số rất lớn</td>']])+
+  '<div class="callout"><b>App người đeo kính:</b> dùng thang riêng cho người lớn tuổi (ticket B05). Chữ thường 16,5px, tiêu đề dòng 18px, số lớn 27px, chữ nút 19px; nhân hệ số 1 / 1,2 / 1,4 theo cài đặt cỡ chữ.</div>';
+};
+
+PAGES.spacing=function(){
+  var rows=SPACING.map(function(s){return['<td class="k">spacing-'+s[0]+"</td>",'<td class="num">'+s[1]+"px</td>",'<td style="width:50%"><div class="bar" style="width:'+Math.min(s[1],160)/160*100+'%;min-width:'+(s[1]?2:0)+'px"></div></td>']});
+  return '<p class="eyebrow">Foundations</p><h1>Spacing</h1><p class="lead">Thang spacing bước 4px, từ 0 đến 160px. Khoảng cách trong component dùng bậc nhỏ (4–24), khoảng cách giữa các section dùng bậc lớn (32–64).</p>'+
+  '<h2 id="thang">Thang spacing</h2>'+table(["Token","Giá trị","Minh họa"],rows)+
+  '<h2 id="container">Container</h2>'+table(["Token","Giá trị"],[
+    ['<td class="k">container-padding-mobile</td>','<td class="num">16px</td>'],
+    ['<td class="k">container-padding-desktop</td>','<td class="num">32px</td>'],
+    ['<td class="k">container-max-width-desktop</td>','<td class="num">1280px</td>'],
+    ['<td class="k">paragraph-max-width</td>','<td class="num">720px</td>']]);
+};
+
+PAGES.radius=function(){
+  var cells=RADIUS.map(function(r){return'<div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start"><div class="rad" style="border-radius:'+Math.min(r[1],36)+'px"></div><div><div class="mono" style="font-size:12.5px;color:var(--accent-ink)">radius-'+r[0]+'</div><div class="mono" style="font-size:12px;color:var(--ink-3)">'+r[1]+"px</div></div></div>"}).join("");
+  return '<p class="eyebrow">Foundations</p><h1>Border radius</h1><p class="lead">12 mức bo góc. Nút và input luôn bo 12px (radius-xl), modal 16px, nút chỉ icon và avatar bo tròn.</p>'+
+  '<h2 id="thang">Thang bo góc</h2><div class="grid-auto">'+cells+"</div>"+
+  '<h2 id="cach-dung">Cách dùng</h2>'+table(["Thành phần","Token"],[
+    ["<td>Button (mọi size), Input, Card</td>",'<td class="k">radius-xl · 12px</td>'],
+    ["<td>Modal</td>",'<td class="k">radius-2xl · 16px</td>'],
+    ["<td>Badge (kiểu badge), Tab</td>",'<td class="k">radius-sm · 6px</td>'],
+    ["<td>Badge pill, nút chỉ icon, avatar, toggle</td>",'<td class="k">radius-full</td>']]);
+};
+
+PAGES.shadows=function(){
+  var cells=SHADOWS.map(function(s){return'<div style="display:flex;flex-direction:column;gap:10px"><div class="shadow-box" style="box-shadow:'+s[1]+'">'+s[0]+'</div><div style="font-size:13px;color:var(--ink-2)">'+s[2]+"</div></div>"}).join("");
+  return '<p class="eyebrow">Foundations</p><h1>Shadow &amp; focus</h1><p class="lead">Bảy mức shadow và vòng focus. Ở chế độ tối shadow trong suốt, phân lớp bằng viền.</p>'+
+  '<h2 id="xem">Xem trước</h2><div class="grid-auto" style="padding:24px;background:var(--stage);border-radius:12px;border:1px solid var(--line)">'+cells+"</div>"+
+  '<h2 id="gia-tri">Giá trị</h2>'+table(["Token","box-shadow"],SHADOWS.map(function(s){return['<td class="k">'+s[0]+"</td>",'<td class="v">'+s[1]+"</td>"]}))+
+  '<h2 id="blur">Backdrop blur</h2><p>sm 8px · md 16px (nền modal) · lg 24px · xl 40px.</p>';
+};
+
+PAGES.button=function(){
+  var quick=[
+    ["size","xs","height:32px; padding:6px 10px; gap:4px; font:600 14px/20px"],
+    ["size","sm","height:36px; padding:8px 12px; gap:4px; font:600 14px/20px"],
+    ["size","md","height:40px; padding:10px 14px; gap:4px; font:600 14px/20px"],
+    ["size","lg","height:44px; padding:10px 16px; gap:6px; font:600 16px/24px"],
+    ["size","xl","height:48px; padding:12px 18px; gap:6px; font:600 16px/24px"],
+    ["hierarchy","primary","background:var(--bg-brand-solid); color:var(--text-white); liquid glass"],
+    ["hierarchy","secondary","background:Secondary/600 #2A9722; color:var(--text-white); liquid glass"],
+    ["hierarchy","tertiary","background:var(--bg-brand-primary); color:var(--text-brand-tertiary)"],
+    ["hierarchy","ghost","background:var(--bg-primary); color:var(--text-primary); ghost shadow"],
+    ["hierarchy","outline","background:var(--bg-primary); border:2px var(--border-brand); color:var(--text-brand-tertiary)"],
+    ["hierarchy","error","background:var(--bg-error-solid); color:var(--text-white); liquid glass"],
+    ["hierarchy","errorSoft","background:var(--bg-error-secondary); color:var(--text-error-primary)"],
+    ["iconOnly","true","border-radius:9999px; width = height; padding 8–14px"],
+    ["disabled","true","opacity:.5; bỏ liquid glass; cursor:not-allowed"],
+    ["loading","true","spinner thay icon trái; aria-busy; chặn bấm lần hai"]
+  ];
+  var qr=quick.map(function(q){return['<td class="k">'+q[0]+'</td>','<td class="k" style="color:var(--ink)">'+q[1]+"</td>",'<td class="v">'+q[2]+"</td>"]});
+
+  var hierRow=HIER.map(function(h){return btn({hierarchy:h,label:HIER_LABEL[h]})}).join("");
+  var hierCode=HIER.map(function(h){return jsx({hierarchy:h,label:HIER_LABEL[h]})}).join("\n");
+  var sizeRow=SIZES.map(function(s){return btn({size:s,label:"Size "+s,iconLeading:"plus"})}).join("");
+  var sizeCode=SIZES.map(function(s){return jsx({size:s,label:"Size "+s,iconLeading:"plus"})}).join("\n");
+  var iconRow=btn({iconLeading:"plus",label:"Thêm thuốc"})+btn({hierarchy:"outline",iconTrailing:"arrow",label:"Xem lịch"})+btn({hierarchy:"tertiary",iconLeading:"download",label:"Tải báo cáo"})+btn({hierarchy:"error",iconLeading:"phone",label:"Gọi 115"});
+  var iconCode=[jsx({iconLeading:"plus",label:"Thêm thuốc"}),jsx({hierarchy:"outline",iconTrailing:"arrow",label:"Xem lịch"}),jsx({hierarchy:"tertiary",iconLeading:"download",label:"Tải báo cáo"}),jsx({hierarchy:"error",iconLeading:"phone",label:"Gọi 115"})].join("\n");
+  var ioRow=SIZES.map(function(s){return btn({size:s,iconOnly:true,iconLeading:"mic",label:"Nói với kính"})}).join("")+btn({iconOnly:true,hierarchy:"error",iconLeading:"phone",label:"Gọi 115"})+btn({iconOnly:true,hierarchy:"ghost",iconLeading:"x",label:"Đóng"})+btn({iconOnly:true,hierarchy:"outline",iconLeading:"plus",label:"Thêm"});
+  var ioCode='<Button size="xs" iconOnly aria-label="Nói với kính" iconLeading={<MicIcon />} />\n<Button hierarchy="error" iconOnly aria-label="Gọi 115" iconLeading={<PhoneIcon />} />\n<Button hierarchy="ghost" iconOnly aria-label="Đóng" iconLeading={<XIcon />} />';
+
+  var states=["default","hover","focus","disabled","loading"];
+  var stLabel={default:"Default",hover:"Hover *",focus:"Focus *",disabled:"Disabled",loading:"Loading"};
+  var matrix='<div class="row" style="gap:8px"><span class="lbl"></span>'+states.map(function(s){return'<span class="lbl" style="min-width:150px">'+stLabel[s]+"</span>"}).join("")+"</div>";
+  HIER.forEach(function(h){
+    matrix+='<div class="row" style="gap:8px"><span class="lbl">'+HIER_LABEL[h]+"</span>"+states.map(function(s){
+      return'<span style="min-width:150px;display:inline-flex">'+btn({hierarchy:h,label:"Xác nhận",iconLeading:"check",disabled:s==="disabled",loading:s==="loading",force:(s==="hover"||s==="focus")?s:""})+"</span>";
+    }).join("")+"</div>";
+  });
+
+  var props=[
+    ["size",'"xs" | "sm" | "md" | "lg" | "xl"','"md"',"Figma: Size. Mặc định Figma là xs, code dùng md."],
+    ["hierarchy",'"primary" | "secondary" | "tertiary" | "ghost" | "outline" | "error" | "errorSoft"','"primary"',"Figma: Hierarchy."],
+    ["iconLeading","ReactNode","—","Figma: Icon leading + swap."],
+    ["iconTrailing","ReactNode","—","Figma: Icon trailing + swap. Ẩn khi loading."],
+    ["iconOnly","boolean","false","Nút tròn, bắt buộc aria-label."],
+    ["loading","boolean","false","Figma: State = Loading."],
+    ["loadingText","string | false","nhãn gốc","Figma: Loading text. false = chỉ spinner."],
+    ["disabled","boolean","false","Figma: State = Disabled."],
+    ["fullWidth","boolean","false","Form và modal trên mobile."],
+    ["aria-label","string","—","Bắt buộc với iconOnly hoặc loadingText={false}."]
+  ].map(function(p){return['<td class="k">'+p[0]+"</td>",'<td class="v">'+esc(p[1])+"</td>",'<td class="v">'+esc(p[2])+"</td>","<td>"+p[3]+"</td>"]});
+
+  var contrast=[
+    ["Ghost","#0F172A / #FFFFFF","17,85:1",1],["Outline","#004EB0 / #FFFFFF","7,73:1",1],["Primary","#FFFFFF / #0057C4","6,64:1",1],
+    ["Tertiary","#004EB0 / #E6EEF9","6,61:1",1],["Error","#FFFFFF / #DC2626","4,83:1",1],["Error soft","#DC2626 / #FEE2E2","3,95:1",0],["Secondary","#FFFFFF / #2A9722","3,79:1",0]
+  ].map(function(c){return["<td>"+c[0]+"</td>",'<td class="v">'+c[1]+"</td>",'<td class="num">'+c[2]+"</td>",'<td class="'+(c[3]?"pass":"fail")+'">'+(c[3]?"Đạt":"Chưa đạt")+"</td>"]});
+
+  var tokensT=[
+    ["Primary","bg-brand-solid","—","text-white","fg-white"],
+    ["Secondary","Secondary/600 (primitive)","—","text-white","fg-white"],
+    ["Error","bg-error-solid","—","text-white","fg-white"],
+    ["Outline","bg-primary","border-brand · 2px","text-brand-tertiary","fg-brand-secondary"],
+    ["Tertiary","bg-brand-primary","—","text-brand-tertiary","fg-brand-secondary"],
+    ["Ghost","bg-primary","—","text-primary","fg-primary · 60%"],
+    ["Error soft","bg-error-secondary","—","text-error-primary","fg-error-secondary"]
+  ].map(function(r){return["<td>"+r[0]+"</td>",'<td class="k">'+r[1]+"</td>",'<td class="k">'+r[2]+"</td>",'<td class="k">'+r[3]+"</td>",'<td class="k">'+r[4]+"</td>"]});
+
+  return '<p class="eyebrow">Components</p><h1>Button</h1>'+
+  '<p class="lead">Nút bấm chuẩn của Trivela Care: 5 size, 7 hierarchy, 3 state, có hoặc không có chữ. Mọi số đo đọc từ component <code style="font-size:.86em">Buttons/Button Standard</code> trong Figma.</p>'+
+  '<h2 id="tham-chieu">Tham chiếu nhanh</h2>'+table(["Prop","Giá trị","Styles"],qr,"scroll")+
+  '<h2 id="playground">Playground</h2><p>Đổi các control để xem nút và code tương ứng. Đây là phần "Controls" của Storybook.</p>'+
+  '<div class="pg"><div class="stage" id="pgStage"></div><div class="controls" id="pgCtl"></div></div>'+
+  '<div class="pg-code"><div class="tabs" role="tablist"><button role="tab" aria-selected="true" data-tab="jsx">React</button><button role="tab" aria-selected="false" data-tab="html">HTML</button></div><div id="pgCode"></div></div>'+
+  '<h2 id="vi-du">Ví dụ</h2>'+
+  '<h3 id="hierarchy">Hierarchy</h3><p>Mỗi vùng chỉ một nút <b>Primary</b>; hành động phụ dùng <b>Outline</b>. <b>Secondary</b> (xanh lá) cho xác nhận tích cực, <b>Error</b> và <b>Error soft</b> cho hành động nguy hiểm.</p>'+example(hierRow,hierCode)+
+  '<h3 id="size">Size</h3><p>Chiều cao 32 → 48px. Size md là mặc định cho web, lg/xl cho mobile.</p>'+example(sizeRow,sizeCode)+
+  '<h3 id="icon">Có icon</h3><p>Icon 16px ở xs, 20px từ sm. Icon dùng màu chữ, riêng Outline và Tertiary dùng <code>fg-brand-secondary</code>.</p>'+example(iconRow,iconCode)+
+  '<h3 id="icon-only">Chỉ icon</h3><p>Nút tròn, vuông theo chiều cao. Luôn có <code>aria-label</code>.</p>'+example(ioRow,ioCode)+
+  '<h3 id="loading">Loading</h3><p>Spinner thay icon trái, nút giữ màu và chặn bấm lần hai. Nhãn Figma là "Submitting...", đề xuất dùng "Đang xử lý…".</p>'+
+  example(btn({loading:true})+btn({hierarchy:"outline",loading:true})+btn({hierarchy:"secondary",loading:true,loadingText:"Đang lưu…"})+btn({loading:true,iconOnly:true,label:"Đang gửi"}),
+    '<Button loading>Đặt lịch khám</Button>\n<Button hierarchy="outline" loading>Đặt lịch khám</Button>\n<Button hierarchy="secondary" loading loadingText="Đang lưu…">Lưu</Button>\n<Button iconOnly loading aria-label="Đang gửi" />')+
+  '<h3 id="full-width">Full width</h3><p>Dùng trong form và modal trên mobile; hai nút xếp dọc, nút chính ở trên.</p>'+
+  example('<div style="width:min(360px,100%);display:flex;flex-direction:column;gap:12px">'+btn({size:"lg",hierarchy:"error",iconLeading:"phone",label:"Gọi 115"}).replace('class="','style="width:100%" class="')+btn({size:"lg",hierarchy:"ghost",label:"Hủy SOS"}).replace('class="','style="width:100%" class="')+"</div>",
+    '<Button size="lg" hierarchy="error" fullWidth iconLeading={<PhoneIcon />}>Gọi 115</Button>\n<Button size="lg" hierarchy="ghost" fullWidth>Hủy SOS</Button>')+
+  '<h2 id="trang-thai">Trạng thái</h2><p>Figma có Default, Disabled, Loading. Cột có dấu * là <b>đề xuất</b>, chưa có trong Figma: Hover đậm nền một bậc, Focus thêm vòng 2px + 2px.</p>'+
+  '<div class="ex"><div class="stage col" style="overflow-x:auto;justify-content:flex-start;align-items:flex-start">'+matrix+"</div></div>"+
+  '<h2 id="token">Token theo hierarchy</h2>'+table(["Hierarchy","Nền","Viền","Chữ","Icon"],tokensT)+
+  '<h2 id="liquid-glass">Liquid glass</h2><p>Primary, Secondary và Error có lớp kính 4 lớp trong Figma (bóng, nền trắng 94%, tint, hiệu ứng GLASS). CSS dùng bản xấp xỉ bằng inset shadow. Khi disabled, lớp kính bị bỏ.</p>'+
+  example(btn({size:"xl",label:"Primary"})+btn({size:"xl",hierarchy:"secondary",label:"Secondary"})+btn({size:"xl",hierarchy:"error",label:"Error"}),
+    '.tc-btn--primary {\n  background: var(--bg-brand-solid);\n  box-shadow:\n    inset 0 1px 0 rgba(255,255,255,.28),\n    inset 0 -1px 0 rgba(0,0,0,.18),\n    -1px 0 0 -0.5px rgba(230,230,230,.6),\n    1px 0 0 -0.5px rgba(230,230,230,.6),\n    0 8px 15px rgba(0,0,0,.02);\n}',{raw:true})+
+  '<h2 id="props">Props</h2>'+table(["Prop","Kiểu","Mặc định","Mô tả"],props)+
+  '<h2 id="a11y">Accessibility</h2><p>Năm hierarchy đạt WCAG AA cho chữ 14px. Secondary và Error soft chỉ đạt mức chữ lớn (≥ 3:1).</p>'+
+  table(["Hierarchy","Chữ / nền","Tương phản","AA chữ 14px"],contrast)+
+  '<ul class="plain"><li>Dùng thẻ <code>&lt;button&gt;</code>, hoặc <code>&lt;a&gt;</code> khi điều hướng.</li><li>Loading đặt <code>aria-busy="true"</code>; spinner <code>aria-hidden</code>.</li><li>Vùng bấm tối thiểu 44 × 44px; xs, sm, md cần mở rộng vùng bấm trên mobile.</li><li>Focus ring chỉ hiện với <code>:focus-visible</code>.</li><li>Tôn trọng <code>prefers-reduced-motion</code>.</li></ul>'+
+  '<h2 id="mo">Chờ design chốt</h2>'+table(["#","Câu hỏi","Đề xuất tạm"],[
+    ['<td class="num">1</td>',"<td>Màu Hover, Pressed, Focus</td>","<td>Như bảng Trạng thái</td>"],
+    ['<td class="num">2</td>',"<td>Secondary và Error soft chưa đạt AA</td>","<td>Secondary/700 #24771E; chữ Error soft Error/700 #B91C1C</td>"],
+    ['<td class="num">3</td>',"<td>Hai nền đang gắn primitive</td>","<td>Thêm token bg-secondary-brand-solid, bg-disabled</td>"],
+    ['<td class="num">4</td>','<td>Nhãn Loading tiếng Anh</td>',"<td>“Đang xử lý…”</td>"],
+    ['<td class="num">5</td>',"<td>Size mặc định</td>","<td>md trong code</td>"]
+  ]);
+};
+
+/* ---------- Input field ---------- */
+var FID=0;
+var IN_TYPES=[
+  ["default","Default"],["password","Password"],["dateTime","Date and time"],["payment","Payment input"],
+  ["leadingDropdown","Leading dropdown"],["trailingDropdown","Trailing dropdown"],["leadingText","Leading text"],
+  ["trailingButton","Trailing button"],["fileUpload","File upload"],["tags","Tags"],
+  ["counterH","Number counter horizontal"],["counterV","Number counter vertical"],["otp","OTP"]
+];
+var IN_SAMPLE={
+  default:{label:"Email",ph:"ban@trivelacare.vn",val:"lan.nguyen@trivelacare.vn",hint:"Dùng để nhận thông báo lịch khám.",type:"email"},
+  password:{label:"Mật khẩu",ph:"••••••••",val:"matkhau123",hint:"Tối thiểu 8 ký tự.",type:"password"},
+  dateTime:{label:"Ngày giờ khám",ph:"DD/MM/YYYY – 00:00",val:"14/11/2026 – 16:00",hint:"Giờ 24 tiếng.",type:"text"},
+  payment:{label:"Số thẻ",ph:"0000 0000 0000 0000",val:"4111 1111 1111 1111",hint:"Thẻ thử, không phải thẻ thật.",type:"text"},
+  leadingDropdown:{label:"Số điện thoại",ph:"0912 345 678",val:"0912 345 678",hint:"Người thân nhận SOS qua số này.",type:"tel"},
+  trailingDropdown:{label:"Chi phí",ph:"1.000.000",val:"350.000",hint:"Số có dấu chấm hàng nghìn.",type:"text"},
+  leadingText:{label:"Website phòng khám",ph:"phongkham.vn",val:"benhvienmat.vn",hint:"",type:"text"},
+  trailingButton:{label:"Mã mời người thân",ph:"TRV-0000",val:"TRV-4F2A",hint:"Gửi mã này cho người thân.",type:"text"},
+  fileUpload:{label:"Đơn thuốc",ph:"Chưa chọn tệp",val:"don-thuoc-14-11.pdf",hint:"PDF hoặc ảnh, tối đa 10 MB.",type:"text"},
+  tags:{label:"Dị ứng thuốc",ph:"Thêm thẻ",val:"",hint:"Nhấn Enter để thêm.",type:"text"},
+  counterH:{label:"Số viên mỗi lần",ph:"0",val:"2",hint:"",type:"text"},
+  counterV:{label:"Số lần nhắc lại",ph:"0",val:"3",hint:"",type:"text"},
+  otp:{label:"Mã xác thực",ph:"0",val:"",hint:"Mã gồm 4 chữ số.",type:"text"}
+};
+function field(o){
+  o=Object.assign({size:"md",kind:"default",state:"placeholder",error:false,required:true,errorText:"Vui lòng nhập đúng định dạng.",fw:null,icon:null},o);
+  var s=IN_SAMPLE[o.kind]||IN_SAMPLE.default;
+  var label=o.label!=null?o.label:s.label, hint=o.hint!=null?o.hint:s.hint, ph=o.ph||s.ph;
+  var id="f"+(++FID), hid=id+"-h";
+  var dis=o.state==="disabled", val=(o.state==="filled"||o.state==="focused")?s.val:"";
+  var isz=o.size==="sm"?16:20;
+  var cls="tc-field tc-field--"+o.size+(o.error?" is-error":"")+(o.state==="focused"?" is-focus":"")+(dis?" is-disabled":"");
+  var help='<span class="help"'+(o.error?' aria-hidden="true"':' title="Gợi ý"')+'>'+icon(o.error?"alert":"help",16)+"</span>";
+  var desc=(hint||o.error)?' aria-describedby="'+hid+'"':"";
+  var inp=function(extra,cls2){return '<input id="'+id+'"'+(cls2?' class="'+cls2+'"':"")+' type="'+(extra&&extra.type||s.type)+'" placeholder="'+esc(ph)+'" value="'+esc(extra&&extra.val!=null?extra.val:val)+'"'+(dis?" disabled":"")+(o.error?' aria-invalid="true"':"")+(o.required?' aria-required="true"':"")+desc+(extra&&extra.attrs||"")+">"};
+  var box="";
+  switch(o.kind){
+    case "password": box='<div class="tc-input">'+icon("lock",isz)+inp()+'<button type="button" class="icbtn" data-act="pw" aria-label="Hiện mật khẩu">'+icon("eye",16)+"</button></div>";break;
+    case "dateTime": box='<div class="tc-input">'+icon("calendar",isz)+inp({attrs:' inputmode="numeric"'})+help+"</div>";break;
+    case "payment": box='<div class="tc-input"><span class="tc-card"><svg width="22" height="14" viewBox="0 0 22 14" aria-hidden="true"><circle cx="8" cy="7" r="6" fill="#EB001B"/><circle cx="14" cy="7" r="6" fill="#F79E1B" fill-opacity=".9"/></svg></span>'+inp({attrs:' inputmode="numeric" autocomplete="cc-number"'})+help+"</div>";break;
+    case "leadingDropdown": box='<div class="tc-input tc-input--split"><button type="button" class="tc-addon tc-addon--lead" style="border:0;background:none;font:inherit;cursor:pointer" aria-label="Mã quốc gia: Việt Nam +84"><span class="tc-flag"></span><span>+84</span>'+icon("chevDown",16)+'</button><div class="tc-split-in">'+inp({attrs:' autocomplete="tel"'})+help+"</div></div>";break;
+    case "trailingDropdown": box='<div class="tc-input tc-input--split"><div class="tc-split-in"><span class="muted">₫</span>'+inp({attrs:' inputmode="numeric"'})+help+'</div><button type="button" class="tc-addon tc-addon--trail" style="border:0;background:none;font:inherit;cursor:pointer" aria-label="Đơn vị tiền: VND"><span>VND</span>'+icon("chevDown",16)+"</button></div>";break;
+    case "leadingText": box='<div class="tc-input tc-input--split"><span class="tc-addon tc-addon--lead">https://</span><div class="tc-split-in">'+inp()+help+"</div></div>";break;
+    case "trailingButton": box='<div class="tc-input tc-input--split"><div class="tc-split-in">'+inp()+help+'</div><button type="button" class="tc-addon tc-addon--trail btn"'+(dis?" disabled":"")+">"+icon("copy",isz)+"Sao chép</button></div>";break;
+    case "fileUpload": box='<div class="tc-input tc-input--split"><div class="tc-split-in">'+inp({attrs:" readonly"})+help+'</div><button type="button" class="tc-addon tc-addon--trail btn"'+(dis?" disabled":"")+">Chọn tệp</button></div>";break;
+    case "tags": box='<div class="tc-input" style="flex-wrap:nowrap">'+["Penicillin","Aspirin"].map(function(t){return'<span class="tc-tag">'+t+'<button type="button" data-act="untag" aria-label="Bỏ '+t+'">'+icon("x",12)+"</button></span>"}).join("")+inp({attrs:' data-tags="1"'})+help+"</div>";break;
+    case "counterH": box='<div class="tc-input tc-counter"><button type="button" class="cbtn" data-act="dec" aria-label="Giảm"'+(dis?" disabled":"")+">"+icon("minus",isz)+"</button>"+inp({val:val||s.val,attrs:' inputmode="numeric"'})+'<button type="button" class="cbtn" data-act="inc" aria-label="Tăng"'+(dis?" disabled":"")+">"+icon("plus",isz)+"</button></div>";break;
+    case "counterV": box='<div class="tc-input" style="padding-right:0">'+inp({val:val||s.val,attrs:' inputmode="numeric"'})+'<span class="tc-vchev"><button type="button" data-act="inc" aria-label="Tăng">'+icon("chevUp",12)+'</button><button type="button" data-act="dec" aria-label="Giảm">'+icon("chevDown",12)+"</button></span></div>";break;
+    case "otp": box='<div class="tc-otp-mini" role="group" aria-label="'+esc(label)+'">'+[0,1,2,3].map(function(i){return'<input type="text" inputmode="numeric" maxlength="1" placeholder="0" aria-label="Chữ số '+(i+1)+'" data-otp="1"'+(dis?" disabled":"")+">"}).join("")+"</div>";break;
+    default: box='<div class="tc-input">'+icon(o.icon||(o.kind==="default"?"mail":"user"),isz)+inp()+help+"</div>";
+  }
+  var htxt=o.error?o.errorText:hint;
+  return '<div class="'+cls+'"'+(o.fw?' style="--fw:'+o.fw+'"':"")+">"+
+    (label?'<label class="tc-label" for="'+id+'">'+esc(label)+(o.required?'<span class="req" aria-hidden="true">*</span>':"")+"</label>":"")+
+    box+(htxt?'<p class="tc-hint" id="'+hid+'">'+esc(htxt)+"</p>":"")+"</div>";
+}
+function inJsx(o){
+  var s=IN_SAMPLE[o.kind]||IN_SAMPLE.default;
+  var a=["<InputField"];
+  if(o.size!=="md")a.push('size="'+o.size+'"');
+  if(o.kind!=="default")a.push('variant="'+o.kind+'"');
+  a.push('label="'+(o.label!=null?o.label:s.label)+'"');
+  a.push('placeholder="'+s.ph+'"');
+  var h=o.hint!=null?o.hint:s.hint; if(h&&!o.error)a.push('hint="'+h+'"');
+  if(o.required)a.push("required");
+  if(o.error)a.push('error="Vui lòng nhập đúng định dạng."');
+  if(o.state==="disabled")a.push("disabled");
+  if(o.state==="filled"||o.state==="focused")a.push('defaultValue="'+s.val+'"');
+  return a.join("\n  ")+"\n/>";
+}
+function textarea(o){
+  o=Object.assign({size:"md",error:false,state:"placeholder"},o);
+  var id="f"+(++FID);
+  return '<div class="tc-field tc-field--'+o.size+(o.error?" is-error":"")+(o.state==="disabled"?" is-disabled":"")+'" style="--fw:100%"><label class="tc-label" for="'+id+'">Ghi chú cho bác sĩ<span class="req" aria-hidden="true">*</span></label><textarea class="tc-textarea" id="'+id+'" placeholder="Mô tả triệu chứng, thời gian bắt đầu…"'+(o.error?' aria-invalid="true"':"")+(o.state==="disabled"?" disabled":"")+">"+(o.state==="filled"?"Đau đầu nhẹ từ sáng, uống thuốc huyết áp lúc 08:00.":"")+'</textarea><p class="tc-hint">'+(o.error?"Vui lòng nhập ít nhất 10 ký tự.":"Tối đa 500 ký tự.")+"</p></div>";
+}
+function codeInput(o){
+  o=Object.assign({size:"md",digits:6,error:false,filled:0},o);
+  var cells=[];
+  for(var i=0;i<o.digits;i++){
+    if(o.digits===6&&i===3)cells.push('<span class="dash" aria-hidden="true">-</span>');
+    cells.push('<input type="text" inputmode="numeric" maxlength="1" placeholder="0" aria-label="Chữ số '+(i+1)+'" data-otp="1" value="'+(i<o.filled?String((i*3+4)%10):"")+'">');
+  }
+  return '<div class="tc-field'+(o.error?" is-error":"")+'" style="--fw:100%"><span class="tc-label">Mã xác thực</span><div class="tc-code tc-code--'+o.size+'" role="group" aria-label="Mã xác thực '+o.digits+' chữ số">'+cells.join("")+'</div><p class="tc-hint">'+(o.error?"Mã không đúng. Kiểm tra tin nhắn và nhập lại.":"Mã gồm "+o.digits+" chữ số, gửi qua SMS.")+"</p></div>";
+}
+
+PAGES.input=function(){
+  FID=0;
+  var quick=[
+    ["size","sm","height:40px; padding:0 12px; gap:8px; giá trị 14/20; icon 16; hint 12/18"],
+    ["size","md","height:44px; padding:0 12px; gap:8px; giá trị 16/24; icon 20; hint 14/20"],
+    ["size","lg","height:48px; padding:0 14px; gap:8px; giá trị 16/24; icon 20; hint 14/20"],
+    ["state","placeholder","viền 1px --border-primary; chữ --text-placeholder"],
+    ["state","filled","viền 1px --border-primary; chữ --text-primary"],
+    ["state","focused","viền 2px --border-brand"],
+    ["state","disabled","ô nhập opacity .5 (nhãn và hint giữ nguyên)"],
+    ["error","true","viền 1px --border-error-subtle; focus 2px --border-error; icon alert-circle; hint --text-error-primary"]
+  ].map(function(q){return['<td class="k">'+q[0]+"</td>",'<td class="k" style="color:var(--ink)">'+q[1]+"</td>",'<td class="v">'+q[2]+"</td>"]});
+
+  var sizeRow=["sm","md","lg"].map(function(s){return field({size:s,state:"placeholder",label:"Size "+s,hint:"Chiều cao "+({sm:40,md:44,lg:48})[s]+"px",fw:"260px"})}).join("");
+  var states=[["placeholder","Placeholder",false],["filled","Filled",false],["focused","Focused",false],["disabled","Disabled",false],["placeholder","Error",true],["focused","Error + focused",true]];
+  var stateGrid='<div class="grid-auto" style="width:100%;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))">'+states.map(function(st){return field({state:st[0],error:st[2],label:st[1],fw:"100%"})}).join("")+"</div>";
+  var typeGrid='<div class="grid-auto" style="width:100%;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:28px 32px">'+IN_TYPES.map(function(t){return'<div style="display:flex;flex-direction:column;gap:8px;min-width:0"><span class="mono" style="font-size:11.5px;color:var(--ink-3)">'+t[1]+"</span>"+field({kind:t[0],state:t[0]==="tags"?"placeholder":"filled",fw:"100%"})+"</div>"}).join("")+"</div>";
+
+  var tokens=[
+    ["Nền ô nhập","bg-primary","—"],
+    ["Viền mặc định","border-primary · 1px","—"],
+    ["Viền focus","border-brand · 2px","—"],
+    ["Viền lỗi","border-error-subtle · 1px","border-error · 2px khi focus"],
+    ["Bóng","shadow-xs","trong suốt ở dark mode"],
+    ["Nhãn","text-secondary · Text sm/Medium","dấu * dùng text-error-primary"],
+    ["Giá trị","text-primary · Text md/Regular","sm: Text sm/Regular"],
+    ["Placeholder","text-placeholder","tương phản 4,76:1"],
+    ["Icon đầu, icon gợi ý","fg-quaternary","lỗi: fg-error-secondary"],
+    ["Hint","text-tertiary · Text sm/Regular","lỗi: text-error-primary; sm: Text xs"],
+    ["Add-on chữ (https://, +84, VND)","text-tertiary","ngăn bằng viền border-primary"],
+    ["Nút trong ô (Sao chép, Chọn tệp)","Button Outline, chữ text-brand-tertiary","—"],
+    ["Mã xác thực đã nhập","text-brand-tertiary-alt · 48px/Medium","viền border-brand 2px"]
+  ].map(function(r){return["<td>"+r[0]+"</td>",'<td class="k">'+r[1]+"</td>","<td>"+r[2]+"</td>"]});
+
+  var props=[
+    ["size",'"sm" | "md" | "lg"','"md"',"Figma: Size."],
+    ["variant",'"default" | "password" | "dateTime" | "payment" | "leadingDropdown" | "trailingDropdown" | "leadingText" | "trailingButton" | "fileUpload" | "tags" | "counterH" | "counterV" | "otp"','"default"',"Figma: Type."],
+    ["label","string","—","Figma: Label. Luôn có nhãn; ẩn bằng visually-hidden nếu cần."],
+    ["required","boolean","false","Figma: Required *. Hiện dấu * đỏ."],
+    ["hint","string","—","Figma: Hint text."],
+    ["error","string | boolean","false","Figma: Destructive = True. Chuỗi thay thế hint."],
+    ["disabled","boolean","false","Figma: State = Disabled."],
+    ["iconLeading","ReactNode","mail-01","Figma: Icon leading + Icon swap."],
+    ["helpTooltip","string","—","Figma: Help icon. Hiện tooltip khi hover/focus."],
+    ["value / defaultValue","string","—","Filled khi có giá trị."]
+  ].map(function(p){return['<td class="k">'+p[0]+"</td>",'<td class="v">'+esc(p[1])+"</td>",'<td class="v">'+esc(p[2])+"</td>","<td>"+p[3]+"</td>"]});
+
+  return '<p class="eyebrow">Components</p><h1>Input field</h1>'+
+  '<p class="lead">Ô nhập liệu của Trivela Care: 3 size, 13 loại, 4 trạng thái và trạng thái lỗi. Kèm Textarea và ô nhập mã xác thực. Mọi số đo đọc từ page <code style="font-size:.86em">Inputs</code> trong Figma.</p>'+
+  '<h2 id="in-tham-chieu">Tham chiếu nhanh</h2>'+table(["Prop","Giá trị","Styles"],quick)+
+  '<h2 id="in-playground">Playground</h2><p>Đổi các control để xem ô nhập và code tương ứng. Ô nhập trong playground gõ được thật.</p>'+
+  '<div class="pg"><div class="stage" id="inStage"></div><div class="controls" id="inCtl"></div></div>'+
+  '<div class="pg-code" id="inCode"></div>'+
+  '<h2 id="in-cau-truc">Cấu trúc</h2><p>Một cột dọc, khoảng cách 6px: <b>nhãn</b> (Text sm/Medium, dấu * tùy chọn) → <b>ô nhập</b> → <b>hint</b>. Ô nhập là một hàng ngang gap 8px: icon đầu, giá trị, icon gợi ý (16px). Bo góc 12px, rộng mặc định 320px, co giãn theo cột chứa.</p>'+
+  '<h2 id="in-vi-du">Ví dụ</h2>'+
+  '<h3 id="in-size">Size</h3><p>sm 40px, md 44px, lg 48px. Size sm dùng chữ 14px và icon 16px.</p>'+example(sizeRow,'<InputField size="sm" label="Size sm" />\n<InputField label="Size md" />\n<InputField size="lg" label="Size lg" />')+
+  '<h3 id="in-trang-thai">Trạng thái</h3><p>Focus đổi viền sang 2px màu thương hiệu. Lỗi đổi viền đỏ nhạt, icon gợi ý thành icon cảnh báo, hint thành thông báo lỗi.</p>'+example(stateGrid,'<InputField label="Filled" defaultValue="lan.nguyen@trivelacare.vn" />\n<InputField label="Disabled" disabled />\n<InputField label="Error" error="Vui lòng nhập đúng định dạng." />')+
+  '<h3 id="in-loai">13 loại ô nhập</h3><p>Figma có 14 loại; "Tags inner" và "Tags outer" gộp thành một (thẻ nằm trong hoặc dưới ô). Dữ liệu mẫu theo định dạng Việt Nam: ngày DD/MM/YYYY, giờ 24 tiếng, số có dấu chấm hàng nghìn.</p>'+example(typeGrid,'<InputField variant="password" label="Mật khẩu" />\n<InputField variant="leadingDropdown" label="Số điện thoại" />\n<InputField variant="counterH" label="Số viên mỗi lần" />')+
+  '<h3 id="in-textarea">Textarea</h3><p>Ô nhập nhiều dòng: cao tối thiểu 128px, padding 12/14px, <b>bo góc 8px</b> (khác ô một dòng), có tay kéo đổi cỡ ở góc phải dưới. Hai size sm và md.</p>'+
+  example('<div class="grid-auto" style="width:100%;grid-template-columns:repeat(auto-fill,minmax(280px,1fr))">'+textarea({state:"filled"})+textarea({error:true})+"</div>",'<Textarea label="Ghi chú cho bác sĩ" hint="Tối đa 500 ký tự." required />\n<Textarea label="Ghi chú cho bác sĩ" error="Vui lòng nhập ít nhất 10 ký tự." />')+
+  '<h3 id="in-otp">Mã xác thực</h3><p>Ô số cỡ lớn, 4 hoặc 6 chữ số; loại 6 chữ số có dấu gạch giữa hai nhóm. Ô: sm 64px, md 80px, lg 96px; chữ 48/48/60px Medium; khoảng cách 12px. Gõ một số, con trỏ tự sang ô kế tiếp.</p>'+
+  example('<div style="display:flex;flex-direction:column;gap:28px;width:100%;overflow-x:auto">'+codeInput({size:"sm",digits:4,filled:2})+codeInput({size:"md",digits:6,filled:0})+codeInput({size:"sm",digits:4,filled:4,error:true})+"</div>",'<VerificationCode size="sm" digits={4} />\n<VerificationCode digits={6} />\n<VerificationCode size="sm" digits={4} error="Mã không đúng." />')+
+  '<h2 id="in-token">Token</h2>'+table(["Phần","Token","Ghi chú"],tokens)+
+  '<h2 id="in-props">Props</h2>'+table(["Prop","Kiểu","Mặc định","Mô tả"],props)+
+  '<h2 id="in-a11y">Accessibility</h2><ul class="plain">'+
+  '<li>Mỗi ô có <code>&lt;label for&gt;</code> trỏ đúng <code>id</code>; không dùng placeholder thay nhãn.</li>'+
+  '<li>Hint và lỗi nối vào ô bằng <code>aria-describedby</code>; khi lỗi đặt <code>aria-invalid="true"</code>.</li>'+
+  '<li>Dấu * chỉ để nhìn (<code>aria-hidden</code>); dùng <code>aria-required</code> hoặc <code>required</code>.</li>'+
+  '<li>Lỗi luôn có chữ và icon, không chỉ đổi màu viền.</li>'+
+  '<li>Placeholder #64748B trên nền trắng đạt 4,76:1 (AA).</li>'+
+  '<li>Mã xác thực: dùng <code>inputmode="numeric"</code>, <code>autocomplete="one-time-code"</code>, cho phép dán cả mã.</li>'+
+  '<li>Nút trong ô (hiện mật khẩu, tăng/giảm, bỏ thẻ) có <code>aria-label</code> và vùng bấm tối thiểu 44px trên mobile.</li></ul>'+
+  '<h2 id="in-mo">Chờ design chốt</h2>'+table(["#","Vấn đề trong Figma","Đề xuất"],[
+    ['<td class="num">1</td>',"<td>Chiều cao không thống nhất: Default/Leading dropdown/Trailing dropdown là 40/44/48px, nhưng Password, Date and time, Tags, Leading text, Trailing button, File upload, Number counter là 44/48/48px; Payment input 44px ở cả 3 size</td>","<td>Mọi loại theo 40/44/48px</td>"],
+    ['<td class="num">2</td>',"<td>Textarea bo góc 8px, ô một dòng 12px</td>","<td>Thống nhất 12px, hoặc ghi rõ là chủ ý</td>"],
+    ['<td class="num">3</td>',"<td>Không có biến thể Disabled khi Destructive = True</td>","<td>Disabled luôn bỏ trạng thái lỗi</td>"],
+    ['<td class="num">4</td>',"<td>Ngày dạng MM/DD/YYYY, nội dung mẫu tiếng Anh</td>","<td>DD/MM/YYYY, giờ 24 tiếng, nội dung tiếng Việt</td>"],
+    ['<td class="num">5</td>',"<td>Disabled chỉ làm mờ ô, nhãn và hint giữ nguyên</td>","<td>Giữ như Figma (đã áp dụng ở trên)</td>"],
+    ['<td class="num">6</td>',"<td>Ô nhập cho app người đeo kính (người lớn tuổi)</td>","<td>Thêm size xl: cao 58px, chữ 19px theo ticket B05</td>"]
+  ]);
+};
+var inPg={size:"md",state:"placeholder",error:false,kind:"default",label:"",hint:"",required:true};
+function renderInCtl(){
+  var c=$("#inCtl"); if(!c)return;
+  var segH=function(key,label,opts){return'<div class="ctl"><span class="cl">'+label+'</span><div class="seg" data-ikey="'+key+'">'+opts.map(function(o){return'<button type="button" data-v="'+o+'" aria-pressed="'+(String(inPg[key])===o)+'">'+o+"</button>"}).join("")+"</div></div>"};
+  c.innerHTML='<h4>Controls</h4>'+segH("size","size",["sm","md","lg"])+segH("state","state",["placeholder","filled","focused","disabled"])+
+    '<div class="ctl"><label for="in-k">variant</label><select id="in-k">'+IN_TYPES.map(function(t){return'<option value="'+t[0]+'"'+(inPg.kind===t[0]?" selected":"")+">"+t[0]+"</option>"}).join("")+"</select></div>"+
+    '<div class="ctl"><label for="in-l">label</label><input type="text" id="in-l" value="'+esc(inPg.label)+'" placeholder="Theo mẫu"></div>'+
+    '<div class="ctl"><label for="in-h">hint</label><input type="text" id="in-h" value="'+esc(inPg.hint)+'" placeholder="Theo mẫu"></div>'+
+    '<label class="chk"><input type="checkbox" id="in-e"'+(inPg.error?" checked":"")+"> error</label>"+
+    '<label class="chk"><input type="checkbox" id="in-r"'+(inPg.required?" checked":"")+"> required</label>";
+  c.querySelectorAll(".seg").forEach(function(s){s.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;inPg[s.dataset.ikey]=b.dataset.v;renderInCtl();renderInPg()})});
+  $("#in-k").addEventListener("change",function(e){inPg.kind=e.target.value;renderInPg()});
+  $("#in-l").addEventListener("input",function(e){inPg.label=e.target.value;renderInPg()});
+  $("#in-h").addEventListener("input",function(e){inPg.hint=e.target.value;renderInPg()});
+  $("#in-e").addEventListener("change",function(e){inPg.error=e.target.checked;renderInPg()});
+  $("#in-r").addEventListener("change",function(e){inPg.required=e.target.checked;renderInPg()});
+}
+function renderInPg(){
+  var st=$("#inStage"); if(!st)return;
+  var o={size:inPg.size,state:inPg.state,error:inPg.error,kind:inPg.kind,required:inPg.required,label:inPg.label||null,hint:inPg.hint||null};
+  st.innerHTML=field(o);
+  if(o.state==="focused"){var fi=st.querySelector("input");if(fi){try{fi.focus({preventScroll:true});var fv=fi.value;fi.value="";fi.value=fv}catch(err){}}}
+  $("#inCode").innerHTML=codeBlock(inJsx(o));
+}
+/* input interactions */
+document.addEventListener("click",function(e){
+  var b=e.target.closest("[data-act]");
+  if(!b){var bx=e.target.closest(".tc-input");if(bx&&!e.target.closest("button,input,textarea")){var fi=bx.querySelector("input:not([disabled])");if(fi)fi.focus()}return}
+  var box=b.closest(".tc-input"); var inp=box&&box.querySelector("input");
+  if(b.dataset.act==="pw"&&inp){var show=inp.type==="password";inp.type=show?"text":"password";b.setAttribute("aria-label",show?"Ẩn mật khẩu":"Hiện mật khẩu")}
+  if((b.dataset.act==="inc"||b.dataset.act==="dec")&&inp&&!inp.disabled){var n=parseInt(inp.value||"0",10)||0;n+=b.dataset.act==="inc"?1:-1;inp.value=Math.max(0,n)}
+  if(b.dataset.act==="untag"){var t=b.closest(".tc-tag");if(t)t.remove()}
+});
+document.addEventListener("input",function(e){
+  var t=e.target;
+  if(t.dataset&&t.dataset.otp){t.value=t.value.replace(/\D/g,"").slice(-1);if(t.value){var n=t.nextElementSibling;while(n&&n.tagName!=="INPUT")n=n.nextElementSibling;if(n)n.focus()}}
+});
+document.addEventListener("keydown",function(e){
+  var t=e.target;
+  if(t.dataset&&t.dataset.otp&&e.key==="Backspace"&&!t.value){var p=t.previousElementSibling;while(p&&p.tagName!=="INPUT")p=p.previousElementSibling;if(p){p.focus();p.value=""}}
+  if(t.dataset&&t.dataset.tags&&e.key==="Enter"&&t.value.trim()){e.preventDefault();var tag=document.createElement("span");tag.className="tc-tag";tag.innerHTML=esc(t.value.trim())+'<button type="button" data-act="untag" aria-label="Bỏ '+esc(t.value.trim())+'">'+icon("x",12)+"</button>";t.parentNode.insertBefore(tag,t);t.value=""}
+});
+
+/* ---------- Playground ---------- */
+var pg={size:"md",hierarchy:"primary",state:"default",iconOnly:false,iconLeading:"plus",iconTrailing:"",label:"Đặt lịch khám",loadingText:"Đang xử lý…",tab:"jsx"};
+function seg(name,opts,labels){return'<div class="ctl"><span class="cl">'+name.label+'</span><div class="seg" data-key="'+name.key+'">'+opts.map(function(o){return'<button type="button" data-v="'+o+'" aria-pressed="'+(String(pg[name.key])===String(o))+'">'+(labels?labels[o]:o)+"</button>"}).join("")+"</div></div>"}
+function renderControls(){
+  var c=$("#pgCtl"); if(!c)return;
+  c.innerHTML='<h4>Controls</h4>'+
+    seg({key:"size",label:"size"},SIZES)+
+    '<div class="ctl"><label for="pg-h">hierarchy</label><select id="pg-h">'+HIER.map(function(h){return'<option value="'+h+'"'+(pg.hierarchy===h?" selected":"")+">"+h+"</option>"}).join("")+"</select></div>"+
+    seg({key:"state",label:"state"},["default","disabled","loading"])+
+    '<div class="ctl"><label for="pg-l">label</label><input type="text" id="pg-l" value="'+esc(pg.label)+'"></div>'+
+    '<div class="ctl"><label for="pg-il">iconLeading</label><select id="pg-il"><option value="">none</option>'+ICON_PICK.map(function(k){return'<option value="'+k+'"'+(pg.iconLeading===k?" selected":"")+">"+k+"</option>"}).join("")+"</select></div>"+
+    '<div class="ctl"><label for="pg-it">iconTrailing</label><select id="pg-it"><option value="">none</option>'+ICON_PICK.map(function(k){return'<option value="'+k+'"'+(pg.iconTrailing===k?" selected":"")+">"+k+"</option>"}).join("")+"</select></div>"+
+    '<label class="chk"><input type="checkbox" id="pg-io"'+(pg.iconOnly?" checked":"")+"> iconOnly</label>";
+  c.querySelectorAll(".seg").forEach(function(s){s.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;pg[s.dataset.key]=b.dataset.v;renderControls();renderPg()})});
+  $("#pg-h").addEventListener("change",function(e){pg.hierarchy=e.target.value;renderPg()});
+  $("#pg-l").addEventListener("input",function(e){pg.label=e.target.value;renderPg()});
+  $("#pg-il").addEventListener("change",function(e){pg.iconLeading=e.target.value;renderPg()});
+  $("#pg-it").addEventListener("change",function(e){pg.iconTrailing=e.target.value;renderPg()});
+  $("#pg-io").addEventListener("change",function(e){pg.iconOnly=e.target.checked;renderPg()});
+}
+function pgOpts(){return{size:pg.size,hierarchy:pg.hierarchy,label:pg.label||"Nút",iconLeading:pg.iconLeading||null,iconTrailing:pg.iconTrailing||null,iconOnly:pg.iconOnly,disabled:pg.state==="disabled",loading:pg.state==="loading",loadingText:pg.loadingText}}
+function renderPg(){
+  var st=$("#pgStage"); if(!st)return;
+  var o=pgOpts();
+  st.innerHTML=btn(o);
+  var html=btn(o).replace(/<svg[\s\S]*?<\/svg>/g,"<svg …/>");
+  var code=pg.tab==="jsx"?jsx(o):html;
+  $("#pgCode").innerHTML=codeBlock(code);
+  document.querySelectorAll(".pg-code .tabs button").forEach(function(b){b.setAttribute("aria-selected",String(b.dataset.tab===pg.tab))});
+}
+
+/* ---------- Router ---------- */
+function renderNav(cur){
+  $("#nav").innerHTML=NAV.map(function(g){return"<h5>"+g[0]+"</h5><ul>"+g[1].map(function(i){return'<li><a href="#'+i[0]+'"'+(i[0]===cur?' aria-current="page"':"")+">"+i[1]+"</a></li>"}).join("")+(g[0]==="Components"?'<li><span class="soon">Badge · sắp có</span></li>':"")+"</ul>"}).join("");
+}
+function renderToc(){
+  var hs=document.querySelectorAll("#main h2[id], #main h3[id]");
+  $("#toc").innerHTML=hs.length?"<h6>Trên trang này</h6>"+Array.prototype.map.call(hs,function(h){return'<a class="'+(h.tagName==="H3"?"l2":"")+'" href="#'+h.id+'" data-jump="'+h.id+'">'+h.textContent+"</a>"}).join(""):"";
+}
+function pager(cur){
+  var i=ORDER.indexOf(cur),p=ORDER[i-1],n=ORDER[i+1];
+  return'<nav class="pager" aria-label="Trang">'+(p?'<a href="#'+p+'"><span>Trước</span><b>'+TITLES[p]+"</b></a>":"<span></span>")+(n?'<a href="#'+n+'" style="text-align:right"><span>Tiếp</span><b>'+TITLES[n]+"</b></a>":"<span></span>")+"</nav>";
+}
+var lastPage=null;
+function route(){
+  var h=(location.hash||"").slice(1);
+  if(h&&!PAGES[h]){ var el=document.getElementById(h); if(el){el.scrollIntoView();return} }
+  var page=PAGES[h]?h:"button";
+  if(page===lastPage)return;
+  lastPage=page;
+  $("#main").innerHTML=PAGES[page]()+pager(page);
+  renderNav(page); renderToc();
+  if(page==="button"){renderControls();renderPg()}
+  if(page==="input"){renderInCtl();renderInPg()}
+  window.scrollTo(0,0);
+  $("#nav").classList.remove("open"); $("#menuBtn").setAttribute("aria-expanded","false");
+}
+window.addEventListener("hashchange",route);
+
+/* in-page anchors: scroll without leaving the page */
+document.addEventListener("click",function(e){
+  var a=e.target.closest("a[data-jump]");
+  if(a){e.preventDefault();var t=document.getElementById(a.dataset.jump);if(t)t.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});return}
+  var cp=e.target.closest(".copy");
+  if(cp){
+    var txt=cp.parentNode.querySelector("pre").innerText;
+    var done=function(){cp.textContent="Đã chép";setTimeout(function(){cp.textContent="Sao chép"},1400)};
+    try{navigator.clipboard.writeText(txt).then(done,function(){selectPre(cp)})}catch(err){selectPre(cp)}
+    return;
+  }
+  var tb=e.target.closest(".pg-code .tabs button");
+  if(tb){pg.tab=tb.dataset.tab;renderPg()}
+});
+function selectPre(cp){var pre=cp.parentNode.querySelector("pre");var r=document.createRange();r.selectNodeContents(pre);var s=getSelection();s.removeAllRanges();s.addRange(r);cp.textContent="Đã chọn, nhấn Ctrl+C"}
+
+$("#menuBtn").addEventListener("click",function(){var n=$("#nav");var o=n.classList.toggle("open");this.setAttribute("aria-expanded",String(o))});
+$("#themeBtn").addEventListener("click",function(){
+  var r=document.documentElement;
+  var dark=r.getAttribute("data-theme")?r.getAttribute("data-theme")==="dark":matchMedia("(prefers-color-scheme: dark)").matches;
+  r.setAttribute("data-theme",dark?"light":"dark");
+  try{localStorage.setItem("tv-theme",r.getAttribute("data-theme"))}catch(e){}
+});
+try{var saved=localStorage.getItem("tv-theme");if(saved)document.documentElement.setAttribute("data-theme",saved)}catch(e){}
+
+route();
+})();
+</script>
+
+</body>
+</html>
